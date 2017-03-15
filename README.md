@@ -1,1 +1,2 @@
-# Skeleton project for Swagger
+npm install all dependencies
+`npm install`
