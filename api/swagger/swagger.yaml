@@ -104,7 +104,7 @@ paths:
   /:userId/roster/:team/:position/result:
     x-swagger-router-controller: roster
       get:
-        description: 
+        description: Returns the specific players +/- score within the user's team
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
