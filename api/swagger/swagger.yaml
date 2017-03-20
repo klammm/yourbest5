@@ -4,12 +4,11 @@ info:
   title: Hello World App
 # during dev, should point to your local machine
 host: localhost:10010
-# basePath prefixes all resource paths 
+# basePath prefixes all resource paths
 basePath: /
-# 
+#
 schemes:
   # tip: remove http to make production-grade
-  - http
   - https
 # format of bodies a client can send (Content-Type)
 consumes:
@@ -42,6 +41,70 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /:userId/roster:
+    x-swagger-router-controller: roster
+      get:
+        description: Returns the user's complete roster of teams
+        operationId:
+        responses:
+      post:
+        description: Creates a new team for the user's roster
+        operationId:
+        parameters:
+          - name: team
+            in: query
+            description: The name of the team to create
+            required: true
+            type: string
+        responses:
+      delete:
+        description: Deletes the user's specified teams
+        operationId:
+        parameters:
+          - name: team
+            in: query
+            description: The name of the team to delete
+            required: true
+            type: string
+        responses:
+  /:userId/roster/:team:
+    x-swagger-router-controller: roster
+      get:
+        description: Returns the user's specific team
+        operationId:
+        responses:
+  /:userId/roster/:team/:position:
+    x-swagger-router-controller: roster
+      post:
+        description: Adds one player to the user's team at the specified position
+        operationId:
+        parameters:
+          - name: player
+            in: query
+            description: The player to add to the team
+            required: true
+            type: # TBD As a user, do I input the playerID or player name?
+        responses:
+      put:
+        description: Switch out players within a user's team
+        operationId:
+        parameters:
+          - name: player
+            in: query
+            description: The chosen player switching in place of the existing player
+            required: true
+            type: # TBD As a user, do I input the playerID or player name?
+        responses:
+  /:userId/roster/:team/result:
+    x-swagger-router-controller: roster
+      get:
+        description: Returns the user's entire team +/- score
+        operationId:
+        responses:
+  /:userId/roster/:team/:position/result:
+    x-swagger-router-controller: roster
+      get:
+        description: 
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
