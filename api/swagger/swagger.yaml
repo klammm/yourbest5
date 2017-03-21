@@ -43,7 +43,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
   # USER ROSTER
   /{userid}:
-    x-swagger-router-controller: router
+    x-swagger-router-controller: userRoster
     get:
       description: Returns the user's dashboard home page
       operationId: findUser
@@ -57,7 +57,7 @@ paths:
           type: integer
           format: int64
       responses:
-        '200':
+        200:
           description: user dashboard
           schema:
             $ref: '#/definitions/userResponse'
@@ -66,7 +66,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
   /{userid}/team:
-    x-swagger-router-controller: router
+    x-swagger-router-controller: userRoster
     get:
       description: Returns the user's team
       operationId: findUserTeam
@@ -80,7 +80,62 @@ paths:
           type: integer
           format: int64
       responses:
-        '200':
+        200:
+          description: Returns a JSON object of the user's team
+          schema:
+            $ref: '#/definitions/teamResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+    delete:
+      description: Deletes the user's team
+      operationId: deleteTeam
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+      responses:
+        204:
+          description: Team deleted
+          schema:
+            $ref: '#/definitions/rosterResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /{userid}/team/player:
+    x-swagger-router-controller: userRoster
+    post:
+      description: Add one player to the team
+      operationId: addPlayerUserRoster
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+        - name: position
+          in: query
+          description: The position seeking to be placed into
+          required: true
+          type: string
+        - in: body
+          name: newPlayer
+          description: New player to be added to the team
+          required: true
+          schema:
+            $ref: '#/definitions/playerResponse'
+      responses:
+        200:
           description: Returns a JSON object of the user's team
           schema:
             $ref: '#/definitions/rosterResponse'
@@ -88,6 +143,123 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
+    put:
+      description: Replace a player in the team
+      operationId: updatePlayer
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+        - name: position
+          in: query
+          description: The position seeking to be placed into
+          required: true
+          type: string
+        - in: body
+          name: newPlayer
+          description: New player to be added to the team
+          required: true
+          schema:
+            $ref: '#/definitions/playerResponse'
+      responses:
+        200:
+          description: Returns a JSON object of the user's team
+          schema:
+            $ref: '#/definitions/playerResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /{userid}/team/score:
+    x-swagger-router-controller: userRoster
+    get:
+      description: Returns the team's +/- score 
+      operationId: score
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Returns the integer +/- score
+          schema:
+            $ref: '#/definitions/plusminusResponse'
+        default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+  /nba:
+    x-swagger-router-controller: allNBA
+    get:
+      description: Returns all players from the database
+      operationId: allPlayers
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Returns an  array of all the players within our database
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/playerResponse'
+        default:
+            description: unexpected error
+            schema:
+              $ref: '#/definitions/ErrorResponse'
+    post:
+      description: Creates a new player within the database
+      operationId: addPlayerDB
+      produces:
+        - application/json
+      parameters:
+        - name: player
+          in: body
+          description: new player being added to the database
+          required: false
+          schema:
+            $ref: '#/definitions/playerResponse'
+      responses:
+        200:
+          description: returns the new player being added
+          schema:
+            $ref: '#/definitions/playerResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /nba/{playerid}:
+    x-swagger-router-controller: allNBA
+    get:
+      description: Returns a specific player from the database
+      operationId: onePlayer
+      produces:
+        - application/json
+      parameters:
+        - name: playerid
+          in: path
+          description: The player id being searched for
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Returns an  array of all the players within our database
+          schema:
+              $ref: '#/definitions/playerResponse'
+        default:
+          description: unexpected error
+          schema:
+              $ref: '#/definitions/ErrorResponse'
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -121,9 +293,54 @@ definitions:
       team_id:
         type: integer
         format: int64
+  plusminusResponse:
+    required:
+      - score
+    properties:
+      score:
+        type: integer
+        format: int64
+  playerResponse:
+    required:
+      - name
+      - id
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      image:
+        type: string
+      ppg:
+        type: integer
+        format: int64
+      apg:
+        type: integer
+        format: int64
+      fgp:
+        type: integer
+        format: int64
+      ftp:
+        type: integer
+        format: int64
+      rpg:
+        type: integer
+        format: int64
+      bpg:
+        type: integer
+        format: int64
+      spg:
+        type: integer
+        format: int64
+      tpg:
+        type: integer
+        format: int64
   rosterResponse:
     required:
       - id
+      - name
     type: object
     properties:
       id:
