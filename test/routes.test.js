@@ -9,24 +9,36 @@ const app = require('../app');
 
 
 
-//how do use suite and go into regular test?
-// suite('routes', () => {
-//   before((done) => {
-//     knex.migrate.latest()
-//       .then(() => {
-//         done();
-//       })
-//       .catch((err) => {
-//         done(err);
-//       });
-//   });
-//
-//   beforeEach((done) => {
-//     knex.seed.run()
-//       .then(() => {
-//         done();
-//       })
-//       .catch((err) => {
-//         done(err);
-//       });
-//   });
+// how do use suite and go into regular test?
+suite('routes', () => {
+  before((done) => {
+    knex.migrate.latest()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  beforeEach((done) => {
+    knex.seed.run()
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test('GET /userid', (done) => {
+    request(app)
+      .get('/userid')
+      .set('Accept', 'application-json')
+      .expect('Content-Type', /json/)
+      .expect(200, {
+
+      }, done)
+  });
+
+});
