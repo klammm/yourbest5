@@ -1,0 +1,30 @@
+
+exports.seed = function(knex, Promise) {
+  // Deletes ALL existing entries
+  return knex('users').del()
+    .then(function () {
+      // Inserts seed entries
+      return knex('users').insert([
+        {
+          id: 1,
+          first_name: 'Kevin',
+          last_name: 'KlamJohnson',
+          email: 'KlamJohnson@gmail.com',
+          hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
+          team_id: 1,
+          created_at: new Date('2016-06-29 14:26:16 UTC'),
+          updated_at: new Date('2016-06-29 14:26:16 UTC')
+        },
+        {
+          id: 2,
+          first_name: 'KayDaddy',
+          last_name: 'Zheng',
+          email: 'KayDaddy@gmail.com',
+          hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
+          team_id: 2,
+          created_at: new Date('2016-06-29 14:26:16 UTC'),
+          updated_at: new Date('2016-06-29 14:26:16 UTC')
+            }
+          ]);
+    });
+};
