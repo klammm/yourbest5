@@ -41,70 +41,54 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /:userId/roster:
-    x-swagger-router-controller: roster
-      get:
-        description: Returns the user's complete roster of teams
-        operationId:
-        responses:
-      post:
-        description: Creates a new team for the user's roster
-        operationId:
-        parameters:
-          - name: team
-            in: query
-            description: The name of the team to create
-            required: true
-            type: string
-        responses:
-      delete:
-        description: Deletes the user's specified teams
-        operationId:
-        parameters:
-          - name: team
-            in: query
-            description: The name of the team to delete
-            required: true
-            type: string
-        responses:
-  /:userId/roster/:team:
-    x-swagger-router-controller: roster
-      get:
-        description: Returns the user's specific team
-        operationId:
-        responses:
-  /:userId/roster/:team/:position:
-    x-swagger-router-controller: roster
-      post:
-        description: Adds one player to the user's team at the specified position
-        operationId:
-        parameters:
-          - name: player
-            in: query
-            description: The player to add to the team
-            required: true
-            type: # TBD As a user, do I input the playerID or player name?
-        responses:
-      put:
-        description: Switch out players within a user's team
-        operationId:
-        parameters:
-          - name: player
-            in: query
-            description: The chosen player switching in place of the existing player
-            required: true
-            type: # TBD As a user, do I input the playerID or player name?
-        responses:
-  /:userId/roster/:team/result:
-    x-swagger-router-controller: roster
-      get:
-        description: Returns the user's entire team +/- score
-        operationId:
-        responses:
-  /:userId/roster/:team/:position/result:
-    x-swagger-router-controller: roster
-      get:
-        description: Returns the specific players +/- score within the user's team
+  # USER ROSTER
+  /{userid}:
+    x-swagger-router-controller: router
+    get:
+      description: Returns the user's dashboard home page
+      operationId: findUser
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: user dashboard
+          schema:
+            $ref: '#/definitions/userResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /{userid}/team:
+    x-swagger-router-controller: router
+    get:
+      description: Returns the user's team
+      operationId: findUserTeam
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Returns a JSON object of the user's team
+          schema:
+            $ref: '#/definitions/rosterResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /{
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -121,3 +105,205 @@ definitions:
     properties:
       message:
         type: string
+  userResponse:
+    required:
+      - id
+      - first_name
+      - last_name
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      first_name:
+        type: string
+      last_name:
+        type: string
+      team_id:
+        type: integer
+        format: int64
+      weather:
+        type:
+  rosterResponse:
+    required:
+      - id
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+  teamResponse:
+    type: object
+    properties:
+      PG:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      SG:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      SF:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      PF:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      C:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
