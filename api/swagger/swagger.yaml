@@ -88,7 +88,6 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /{
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -122,8 +121,6 @@ definitions:
       team_id:
         type: integer
         format: int64
-      weather:
-        type:
   rosterResponse:
     required:
       - id
