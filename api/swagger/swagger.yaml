@@ -17,30 +17,6 @@ consumes:
 produces:
   - application/json
 paths:
-  /hello:
-    # binds a127 app logic to a route
-    x-swagger-router-controller: hello_world
-    get:
-      description: Returns 'Hello' to the caller
-      # used as the method name of the controller
-      operationId: hello
-      parameters:
-        - name: name
-          in: query
-          description: The name of the person to whom to say hello
-          required: false
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            # a pointer to a definition
-            $ref: "#/definitions/HelloWorldResponse"
-        # responses may fall through to errors
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
   # USER ROSTER
   /{userid}:
     x-swagger-router-controller: userRoster
@@ -218,7 +194,7 @@ paths:
               $ref: '#/definitions/ErrorResponse'
     post:
       description: Creates a new player within the database
-      operationId: addPlayerDB
+      operationId: addPlayerNbaDB
       produces:
         - application/json
       parameters:
@@ -260,6 +236,54 @@ paths:
           description: unexpected error
           schema:
               $ref: '#/definitions/ErrorResponse'
+  /nba/rankings/stats:
+    x-swagger-router-controller: allNBA
+    get:
+      description: Returns the rankings for a certain stat
+      operationId: statRankings
+      produces:
+        - application/json
+      parameters:
+        - name: stat
+          in: query
+          description: The stat being searched for
+          required: true
+          type: string
+      responses:
+        200:
+          description: Returns an array of all the stats in order
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/statResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /nba/rankings/{position}:
+    x-swagger-router-controller: allNBA
+    get:
+      description: Returns the rankings for a certain position
+      operationId: playerPositionRankings
+      produces:
+        - application/json
+      parameters:
+        - name: position
+          in: path
+          description: The position being searched for
+          required: true
+          type: string
+      responses:
+        200:
+          description: Returns an array of all the most picked players for that position
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/playerResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -291,6 +315,16 @@ definitions:
       last_name:
         type: string
       team_id:
+        type: integer
+        format: int64
+  statResponse:
+    required:
+      - name
+    type: object
+    properties:
+      name:
+        type: string
+      result:
         type: integer
         format: int64
   plusminusResponse:
