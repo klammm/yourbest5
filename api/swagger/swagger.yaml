@@ -4,12 +4,11 @@ info:
   title: Hello World App
 # during dev, should point to your local machine
 host: localhost:10010
-# basePath prefixes all resource paths 
+# basePath prefixes all resource paths
 basePath: /
-# 
+#
 schemes:
   # tip: remove http to make production-grade
-  - http
   - https
 # format of bodies a client can send (Content-Type)
 consumes:
@@ -42,6 +41,54 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  # USER ROSTER
+  /{userid}:
+    x-swagger-router-controller: router
+    get:
+      description: Returns the user's dashboard home page
+      operationId: findUser
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: user dashboard
+          schema:
+            $ref: '#/definitions/userResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /{userid}/team:
+    x-swagger-router-controller: router
+    get:
+      description: Returns the user's team
+      operationId: findUserTeam
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Returns a JSON object of the user's team
+          schema:
+            $ref: '#/definitions/rosterResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /{
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -58,3 +105,205 @@ definitions:
     properties:
       message:
         type: string
+  userResponse:
+    required:
+      - id
+      - first_name
+      - last_name
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      first_name:
+        type: string
+      last_name:
+        type: string
+      team_id:
+        type: integer
+        format: int64
+      weather:
+        type:
+  rosterResponse:
+    required:
+      - id
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+  teamResponse:
+    type: object
+    properties:
+      PG:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      SG:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      SF:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      PF:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
+      C:
+        type: object
+        properties:
+          id:
+            type: integer
+            format: int64
+          name:
+            type: string
+          image:
+            type: string
+          ppg:
+            type: integer
+            format: int64
+          apg:
+            type: integer
+            format: int64
+          fgp:
+            type: integer
+            format: int64
+          ftp:
+            type: integer
+            format: int64
+          rpg:
+            type: integer
+            format: int64
+          bpg:
+            type: integer
+            format: int64
+          spg:
+            type: integer
+            format: int64
+          tpg:
+            type: integer
+            format: int64
