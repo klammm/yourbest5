@@ -4,14 +4,15 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('image');
-    table.integer('ppg').notNullable();
-    table.integer('apg').notNullable();
-    table.integer('fgp').notNullable();
-    table.integer('ftp').notNullable();
-    table.integer('rpg').notNullable();
-    table.integer('bpg').notNullable();
-    table.integer('spg').notNullable();
-    table.integer('tpg').notNullable();
+    table.float('ppg').notNullable();
+    table.float('apg').notNullable();
+    table.float('fgp').notNullable();
+    table.float('ftp').notNullable();
+    table.float('tpp').notNullable();
+    table.float('rpg').notNullable();
+    table.float('bpg').notNullable();
+    table.float('spg').notNullable();
+    table.float('tpg').notNullable();
   })
 };
 
