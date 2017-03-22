@@ -15,7 +15,13 @@ module.exports = {
 function allPlayers(req, res) {
   knex('players')
   .then((result) => {
-    res.send(result)
+    const newArray = [];
+    result.forEach((player) => {
+      newArray.push(player)
+    })
+    console.log(result)
+    res.send([{name: 'foxworthington', id: 1}])
+    // res.send(result)
   })
   .catch( (err) => {
     next(err);
