@@ -18,7 +18,7 @@ produces:
   - application/json
 paths:
   # USER ROSTER
-  /users: 
+  /{userid}:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the user's dashboard home page
