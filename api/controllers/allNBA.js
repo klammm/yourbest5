@@ -12,22 +12,47 @@ module.exports = {
 }
 
 
-function allPlayers() {
-
+function allPlayers(req, res) {
+  knex('players')
+  .then((result) => {
+    res.send(result)
+  })
+  .catch( (err) => {
+    next(err);
+  })
 }
 
-function addPlayerNbaDB() {
+function addPlayerNbaDB(req, res) {
+  if (checkDBForPlayer(req.swagger.body)) {
+    // prompt the user that the player exists already
+  } else {
+    knex('players').insert()
 
+  }
 }
 
-function onePlayer() {
-
+function checkDBForPlayer(player) {
+  // check if the DB has this player
 }
 
-function statRankings() {
-
+function onePlayer(req, res) {
+  knex('players').where('id', req.swagger.params.playerid)
+  .then((result) => {
+    if (result) {
+      res.send(result)
+    } else {
+      // prompt the user "Invalid Player ID"
+    }
+  })
+  .catch((err) => {
+    next(err);
+  })
 }
 
-function playerPositionRankings() {
+function statRankings(req, res) {
+  knex('players').orderBy(req.swagger.query.stat, 'desc')
+}
+
+function playerPositionRankings(req, res) {
 
 }

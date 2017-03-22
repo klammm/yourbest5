@@ -8,6 +8,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 1,
             name: "Michael Jordan",
+            position: 'SG',
             image: "",
             ppg: 30.1,
             apg: 5.3,
@@ -22,6 +23,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 2,
             name: "Magic Johnson",
+            position: 'PG',
             image: '',
             ppg: 19.5,
             apg: 11.2,
@@ -36,6 +38,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 3,
             name: "Larry Bird",
+            position: 'SF',
             image: '',
             ppg: 24.3,
             apg: 6.3,
@@ -50,6 +53,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 4,
             name: "Kobe Bryant",
+            position: 'SG',
             image: '',
             ppg: 25.0,
             apg: 4.7,
@@ -64,6 +68,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 5,
             name: "Hakeem Olajuwon",
+            position: 'C',
             image: '',
             ppg: 21.8,
             apg: 2.5,
@@ -78,6 +83,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 6,
             name: "Shaquille O' Neal",
+            position: 'C',
             image: '',
             ppg: 23.7,
             apg: 2.5,
@@ -92,6 +98,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 7,
             name: "LeBron James",
+            position: 'SF',
             image: '',
             ppg: 27.1,
             apg: 7.0,
@@ -106,6 +113,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 8,
             name: "Allen Iverson",
+            position: 'PG',
             image: '',
             ppg: 26.7,
             apg: 6.2,
@@ -120,6 +128,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 9,
             name: "Charles Barkley",
+            position: 'PF',
             image: '',
             ppg: 22.1,
             apg: 3.9,
@@ -134,6 +143,7 @@ exports.seed = function(knex, Promise) {
           {
             id: 10,
             name: "Tim Duncan",
+            position: 'PF',
             image: '',
             ppg: 19.0,
             apg: 3.0,
