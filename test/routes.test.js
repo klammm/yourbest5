@@ -30,9 +30,9 @@ suite('users test', () => {
         done(err);
       });
   });
-  test('GET /usersid', (done) => {
+  test('GET /users/:userid', (done) => {
     request(app)
-      .get('/userid')
+      .get('/users/:userid')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, [{

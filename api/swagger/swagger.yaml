@@ -18,10 +18,28 @@ produces:
   - application/json
 paths:
   # USER ROSTER
-  /users: 
+  /users:
     x-swagger-router-controller: userRoster
     get:
-      description: Returns the user's dashboard home page
+      description: Returns all the users in our database
+      operationId: findAllUsers
+      produces:
+        - application/json
+      responses:
+        200:
+          description: all users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/userResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /users/{userid}: 
+    x-swagger-router-controller: userRoster
+    get:
+      description: Returns the specific user's info
       operationId: findUser
       produces:
         - application/json
@@ -34,14 +52,14 @@ paths:
           format: int64
       responses:
         200:
-          description: user dashboard
+          description: one user
           schema:
             $ref: '#/definitions/userResponse'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /{userid}/team:
+  /users/{userid}/team:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the user's team
@@ -85,7 +103,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /{userid}/team/player:
+  /users/{userid}/team/player:
     x-swagger-router-controller: userRoster
     post:
       description: Add one player to the team
@@ -151,7 +169,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /{userid}/team/score:
+  /users/{userid}/team/score:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the team's +/- score
@@ -236,7 +254,7 @@ paths:
           description: unexpected error
           schema:
               $ref: '#/definitions/ErrorResponse'
-  /nba/rankings/stats:
+  /nba/rankings/{stat}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for a certain stat
@@ -245,7 +263,7 @@ paths:
         - application/json
       parameters:
         - name: stat
-          in: query
+          in: path
           description: The stat being searched for
           required: true
           type: string
@@ -260,7 +278,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /nba/rankings/{position}:
+  /nba/rankings/positions/{position}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for a certain position
@@ -295,10 +313,6 @@ definitions:
       message:
         type: string
   userResponse:
-    required:
-      - id
-      - first_name
-      - last_name
     type: object
     properties:
       id:
