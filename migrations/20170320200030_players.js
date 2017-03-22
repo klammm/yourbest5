@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('players', (table) => {
     table.increments('id').primary();
     table.string('name').notNullable();
+    table.string('position').notNullable();
     table.string('image');
     table.float('ppg').notNullable();
     table.float('apg').notNullable();
