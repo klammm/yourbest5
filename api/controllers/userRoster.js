@@ -34,16 +34,20 @@ function findAllUsers(req, res, next) {
 }
 
 function findUser(req, res, next) {
-  console.log('toast')
-  knex('users').where('id', req.swagger.params.id.value)
+  knex('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
-    console.log(result)
-    // res.send(result);
+    let formattedObj = {
+      id: result[0].id,
+      first_name: result[0].first_name,
+      last_name: result[0].last_name,
+      team_id: result[0].team_id,
+    };
+    res.send(formattedObj)
   })
   .catch((err) => {
-    next(err);
+    res.send({message:"User does not exist"}).status(400)
+    // next(err);
   });
-  res.send({'toast': 1})
 }
 
 function findUserTeam(req, res, next) {
