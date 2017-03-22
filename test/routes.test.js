@@ -4,7 +4,7 @@ process.env.NODE_ENV = 'test';
 
 const { suite, test } = require('mocha');
 const app = require('../app');
-const request = require('supertest').agent(app.listen());
+const request = require('supertest');
 const knex = require('../knex');
 
 
@@ -36,10 +36,15 @@ suite('users test', () => {
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, [{
-        teamid: 1,
+        id: 1,
         first_name: 'Kevin',
         last_name: 'KlamJohnson',
         team_id: 1
+      }, {
+        id: 2,
+        first_name: 'KayDaddy',
+        last_name: 'Zheng',
+        team_id: 2
       }], done)
   })
 
