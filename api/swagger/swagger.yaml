@@ -18,6 +18,7 @@ produces:
   - application/json
 paths:
   # USER ROSTER
+
   /users:
     x-swagger-router-controller: userRoster
     get:
@@ -36,7 +37,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /users/{userid}: 
+  /users/{userid}:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the specific user's info
@@ -333,15 +334,15 @@ definitions:
       name:
         type: string
       result:
-        type: integer
-        format: int64
+        type: number
+        format: float
   plusminusResponse:
     required:
       - score
     properties:
       score:
-        type: integer
-        format: int64
+        type: number
+        format: float
   playerResponse:
     required:
       - name
@@ -356,29 +357,29 @@ definitions:
       image:
         type: string
       ppg:
-        type: integer
-        format: int64
+        type: number
+        format: float
       apg:
-        type: integer
-        format: int64
+        type: number
+        format: float
       fgp:
-        type: integer
-        format: int64
+        type: number
+        format: float
       ftp:
-        type: integer
-        format: int64
+        type: number
+        format: float
       rpg:
-        type: integer
-        format: int64
+        type: number
+        format: float
       bpg:
-        type: integer
-        format: int64
+        type: number
+        format: float
       spg:
-        type: integer
-        format: int64
+        type: number
+        format: float
       tpg:
-        type: integer
-        format: int64
+        type: number
+        format: float
   rosterResponse:
     required:
       - id
@@ -404,29 +405,29 @@ definitions:
           image:
             type: string
           ppg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           apg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           fgp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           ftp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           rpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           bpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           spg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           tpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
       SG:
         type: object
         properties:
@@ -438,29 +439,29 @@ definitions:
           image:
             type: string
           ppg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           apg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           fgp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           ftp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           rpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           bpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           spg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           tpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
       SF:
         type: object
         properties:
@@ -472,29 +473,29 @@ definitions:
           image:
             type: string
           ppg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           apg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           fgp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           ftp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           rpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           bpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           spg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           tpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
       PF:
         type: object
         properties:
@@ -506,29 +507,29 @@ definitions:
           image:
             type: string
           ppg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           apg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           fgp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           ftp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           rpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           bpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           spg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           tpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
       C:
         type: object
         properties:
@@ -540,26 +541,26 @@ definitions:
           image:
             type: string
           ppg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           apg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           fgp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           ftp:
-            type: integer
-            format: int64
+            type: number
+            format: float
           rpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           bpg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           spg:
-            type: integer
-            format: int64
+            type: number
+            format: float
           tpg:
-            type: integer
-            format: int64
+            type: number
+            format: float

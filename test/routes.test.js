@@ -30,22 +30,65 @@ suite('users test', () => {
         done(err);
       });
   });
-  test('GET /users/:userid', (done) => {
+  test('GET /users', (done) => {
     request(app)
-      .get('/users/:userid')
+      .get('/users')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, [{
-        id: 1,
-        first_name: 'Kevin',
-        last_name: 'KlamJohnson',
-        team_id: 1
+        'id': 1,
+        'first_name': 'Kevin',
+        'last_name': 'KlamJohnson',
+        // email: 'KlamJohnson@gmail.com',
+        // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
+        'team_id': 1
       }, {
-        id: 2,
-        first_name: 'KayDaddy',
-        last_name: 'Zheng',
-        team_id: 2
+        'id': 2,
+        'first_name': 'KayDaddy',
+        'last_name': 'Zheng',
+        // email: 'KayDaddy@gmail.com',
+        // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
+        'team_id': 2
       }], done)
-  })
+  });
+
+  test('GET /users/:userid', (done) => {
+    request(app)
+    .get('/users/1')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200, {
+      'id': 1,
+      'first_name': 'Kevin',
+      'last_name': 'KlamJohnson',
+      // email: 'KlamJohnson@gmail.com',
+      // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
+      'team_id': 1
+    }, done);
 
 });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
