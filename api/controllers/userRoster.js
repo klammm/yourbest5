@@ -34,11 +34,10 @@ function findAllUsers(req, res, next) {
 }
 
 function findUser(req, res, next) {
-  console.log('toast')
-  knex('users').where('id', req.swagger.params.id.value)
+  knex('users').where('id', req.params.id)
   .then((result) => {
-    console.log(result)
-    // res.send(result);
+    // console.log(result)
+    res.send(result);
   })
   .catch((err) => {
     next(err);
