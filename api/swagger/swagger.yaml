@@ -18,6 +18,7 @@ produces:
   - application/json
 paths:
   # USER ROSTER
+
   /users:
     x-swagger-router-controller: userRoster
     get:
@@ -36,7 +37,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /users/{userid}: 
+  /users/{userid}:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the specific user's info

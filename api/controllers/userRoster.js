@@ -34,16 +34,17 @@ function findAllUsers(req, res, next) {
 }
 
 function findUser(req, res, next) {
-  console.log('toast')
-  knex('users').where('id', req.swagger.params.id.value)
+  // console.log('This is a user', req.swagger.params.userid.value);
+  knex.select('first_name','id','last_name','team_id').from('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
-    console.log(result)
-    // res.send(result);
+    // delete result[0].email
+    // delete result[0].hashed_password
+    res.send(result[0]);
   })
   .catch((err) => {
     next(err);
   });
-  res.send({'toast': 1})
+  // res.send({'toast': 1})
 }
 
 function findUserTeam(req, res, next) {
