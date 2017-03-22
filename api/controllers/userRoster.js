@@ -12,9 +12,10 @@ module.exports = {
   score: score,
 }
 
-function findUser(req, res) {
+function findUser(req, res, next) {
   knex('users').where('users', req.swagger.params.userid)
   .then((result) => {
+    console.log(result)
     res.send(result);
   })
   .catch((err) => {
@@ -22,7 +23,7 @@ function findUser(req, res) {
   });
 }
 
-function findUserTeam(req, res) {
+function findUserTeam(req, res, next) {
   // grab the user from {userid} -> grab the team_id -> form the JSON object with the player_id matching the team_id
   // -> placing each player_id into their respective positions PG: player_id.position,
   knex('users').where('users', req.swagger.params.userid)

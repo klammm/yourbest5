@@ -1,4 +1,4 @@
-const data = {
+const data = [{
   id: 1,
   first_name: 'Kevin',
   last_name: 'KlamJohnson',
@@ -17,8 +17,8 @@ const data = {
   team_id: 2,
   created_at: new Date('2016-06-29 14:26:16 UTC'),
   updated_at: new Date('2016-06-29 14:26:16 UTC')
-    }
-  ]);
+}
+];
 
 exports.seed = function(knex, Promise) {
   //delete all existing rolls if any -- maybe you run the seed file too many times
@@ -31,3 +31,4 @@ exports.seed = function(knex, Promise) {
       //update id to the maximum id using raw SQL
       return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) from users));");
     });
+}
