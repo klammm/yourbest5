@@ -5,6 +5,7 @@ process.env.NODE_ENV = 'test';
 const { suite, test } = require('mocha');
 const app = require('../app');
 const request = require('supertest').agent(app.listen());
+const knex = require('../knex');
 
 
 
