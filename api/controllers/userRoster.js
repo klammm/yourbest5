@@ -4,6 +4,7 @@ var util = require('util');
 const knex = require('../../knex');
 
 module.exports = {
+  findAllUsers: findAllUsers,
   findUser: findUser,
   findUserTeam: findUserTeam,
   deleteTeam: deleteTeam,
@@ -12,7 +13,21 @@ module.exports = {
   score: score,
 }
 
+function findAllUsers(req, res) {
+  console.log('hello')
+  const example = {
+    id: 1,
+    first_name: "Kaydaddy",
+    last_name: "foxworthington",
+    team_id: 2,
+  };
+  console.log(example)
+  res.send([example]);
+}
+
 function findUser(req, res, next) {
+  console.log('toast')
+  res.send('foxworthington')
   knex('users').where('users', req.swagger.params.userid)
   .then((result) => {
     console.log(result)
