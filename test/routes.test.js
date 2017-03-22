@@ -40,6 +40,6 @@ suite('users test', () => {
         last_name: 'KlamJohnson',
         team_id: 1
       }], done)
-  })gst
+  })
 
 });
