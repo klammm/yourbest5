@@ -22,22 +22,38 @@ function findUser(req, res) {
   });
 }
 
-function findUserTeam() {
-  
+function findUserTeam(req, res) {
+  // grab the user from {userid} -> grab the team_id -> form the JSON object with the player_id matching the team_id
+  // -> placing each player_id into their respective positions PG: player_id.position,
+  knex('users').where('users', req.swagger.params.userid)
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('players_teams').where('team_id', teamId)
+  })
+  .then((team) => {
+
+  })
+  .catch( (err) => {
+    next(err);
+  })
 }
 
-function deleteTeam() {
+function matchPositionsToPositions(playerId) {
+  // place the playerId into it's respective key
+}
+
+function deleteTeam(req, res) {
 
 }
 
-function addPlayerUserRoster() {
+function addPlayerUserRoster(req, res) {
 
 }
 
-function updatePlayer() {
+function updatePlayer(req, res) {
 
 }
 
-function score() {
+function score(req, res) {
 
 }
