@@ -9,7 +9,9 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "express-validation": "^1.0.2",
     "knex": "^0.12.8",
+    "morgan": "^1.8.1",
     "pg": "^6.1.5",
     "swagger-express-mw": "^0.1.0"
   },
