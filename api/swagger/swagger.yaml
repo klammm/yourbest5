@@ -18,7 +18,7 @@ produces:
   - application/json
 paths:
   # USER ROSTER
-  /{userid}:
+  /users:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the user's dashboard home page
@@ -154,7 +154,7 @@ paths:
   /{userid}/team/score:
     x-swagger-router-controller: userRoster
     get:
-      description: Returns the team's +/- score 
+      description: Returns the team's +/- score
       operationId: score
       produces:
         - application/json

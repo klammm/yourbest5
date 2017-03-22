@@ -2,7 +2,9 @@
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
+const router = require('./routes/index');
 
+app.use(router)
 
 var config = {
   appRoot: __dirname // required config
