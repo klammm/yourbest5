@@ -119,6 +119,7 @@ function updatePlayer(req, res) {
 
 function score(req, res) {
   knex('scores')
+
   .then((usersArray) => {
     // console.log(usersArray);
     const scoreArr = [];
