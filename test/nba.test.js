@@ -251,7 +251,7 @@ suite('nba DB test', () => {
   });
   test('GET /nba/rankings/:stat', (done) => {
     request(app)
-    .get('/nba/rankings/ppg')
+    .get('/nba/rankings/ppg        ')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200,[

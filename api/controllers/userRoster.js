@@ -118,27 +118,54 @@ function updatePlayer(req, res) {
 }
 
 function score(req, res) {
-  knex('scores')
+  knex('players')
 
   .then((usersArray) => {
-    // console.log(usersArray);
+    // console.log('userarray is',usersArray);
     const scoreArr = [];
     usersArray.forEach((player) => {
       let scoreArrObj = {
         id: player.id,
-        // name: player.first_name,
-        score: player.score
+        name: player.name,
+        twopp: player.twopp,
+        threepp: player.threepp,
+        orpg: player.orpg,
+        tpg: player.tpg,
+        ftp: player.ftp
       };
       scoreArr.push(scoreArrObj)
     })
-    // res.send(scoreArr)
-    return Promise.all(scoreArr)
+    res.send(scoreArr)
+    // return Promise.all(scoreArr)
   })
-  .then((score) => {
-    console.log(score);
-    res.send(score)
-  })
+  // .then((score) => {
+  //   console.log(score);
+  //   res.send(score)
+  // })
   .catch((err) => {
     next(err);
   })
+  // knex('scores')
+  //
+  // .then((usersArray) => {
+  //   // console.log(usersArray);
+  //   const scoreArr = [];
+  //   usersArray.forEach((player) => {
+  //     let scoreArrObj = {
+  //       id: player.id,
+  //       // name: player.first_name,
+  //       score: player.score
+  //     };
+  //     scoreArr.push(scoreArrObj)
+  //   })
+  //   // res.send(scoreArr)
+  //   return Promise.all(scoreArr)
+  // })
+  // .then((score) => {
+  //   console.log(score);
+  //   res.send(score)
+  // })
+  // .catch((err) => {
+  //   next(err);
+  // })
 }
