@@ -175,5 +175,4 @@ function score(req, res, next) {
   .catch((err) => {
     next(err);
   })
-
 }
