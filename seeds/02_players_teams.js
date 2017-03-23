@@ -54,6 +54,31 @@ exports.seed = function(knex, Promise) {
           id: 10,
           player_id: 5,
           team_id: 2,
+        },
+        {
+          id: 11,
+          player_id: 2,
+          team_id: 3,
+        },
+        {
+          id: 12,
+          player_id: 1,
+          team_id: 3,
+        },
+        {
+          id: 13,
+          player_id: 3,
+          team_id: 3,
+        },
+        {
+          id: 14,
+          player_id: 9,
+          team_id: 3,
+        },
+        {
+          id: 15,
+          player_id: 5,
+          team_id: 3,
         }
       ]);
     });
