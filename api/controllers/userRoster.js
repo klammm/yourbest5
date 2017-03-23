@@ -117,58 +117,63 @@ function updatePlayer(req, res) {
 
 }
 
-function score(req, res) {
-  knex('players')
+function score(req, res, next) {
+  //   knex.select(
+  //   'id',
+  //   'name',
+  //   'twopp',
+  //   'twoap',
+  //   'threepp',
+  //   'threeapg',
+  //   'orpg',
+  //   'tpg',
+  //   'ftp',
+  //   'ftapg')
+  // .from('teams').where('id', req.swagger.params.userid.value)
 
+  knex('players_teams').where('id', req.swagger.params.userid.value)
+  .then((result) => {
+    let teamId = result[0].team_id;
+    if (teamId) {
+      return knex('players_teams').where('team_id', teamId);
+    } else {
+      res.send({message: "No Team Available"}).status(404);
+    }
+  })
+  .then((team) => {
+    let teamArray = team.map((player) => {
+      return player.player_id
+    })
+    let promiseArray = teamArray.map((player) => {
+      return knex('players').where('id', player)
+    })
+    return Promise.all(promiseArray)
+  })
   .then((usersArray) => {
-    // console.log('userarray is',usersArray);
     const scoreArr = [];
     usersArray.forEach((player) => {
+      player.filter((item) => {
+        console.log('item is!!! ' ,item);
       let scoreArrObj = {
-        id: player.id,
-        name: player.name,
-        twopp: player.twopp,
-        twoapg: player.twoapg,
-        threepp: player.threepp,
-        threeapg: player.threeapg,
-        orpg: player.orpg,
-        tpg: player.tpg,
-        ftp: player.ftp,
-        ftapg: player.ftapg
+        id: item.id,
+        name: item.name,
+        twopp: item.twopp,
+        twoapg: item.twoapg,
+        threepp: item.threepp,
+        threeapg: item.threeapg,
+        orpg: item.orpg,
+        tpg: item.tpg,
+        ftp: item.ftp,
+        ftapg: item.ftapg
       };
       scoreArr.push(scoreArrObj)
+      })
     })
     res.send(scoreArr)
     // return Promise.all(scoreArr)
   })
-  // .then((score) => {
-  //   console.log(score);
-  //   res.send(score)
-  // })
   .catch((err) => {
     next(err);
   })
-  // knex('scores')
-  //
-  // .then((usersArray) => {
-  //   // console.log(usersArray);
-  //   const scoreArr = [];
-  //   usersArray.forEach((player) => {
-  //     let scoreArrObj = {
-  //       id: player.id,
-  //       // name: player.first_name,
-  //       score: player.score
-  //     };
-  //     scoreArr.push(scoreArrObj)
-  //   })
-  //   // res.send(scoreArr)
-  //   return Promise.all(scoreArr)
-  // })
-  // .then((score) => {
-  //   console.log(score);
-  //   res.send(score)
-  // })
-  // .catch((err) => {
-  //   next(err);
-  // })
+
 }
