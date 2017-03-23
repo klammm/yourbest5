@@ -39,10 +39,14 @@ suite('users test', () => {
         'id': 1,
         'first_name': 'Kevin',
         'last_name': 'KlamJohnson',
+        // email: 'KlamJohnson@gmail.com',
+        // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
       }, {
         'id': 2,
         'first_name': 'KayDaddy',
         'last_name': 'Zheng',
+        // email: 'KayDaddy@gmail.com',
+        // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
       }], done)
   });
 
@@ -58,6 +62,21 @@ suite('users test', () => {
     }, done);
 
 });
+
+
+//   test('GET /users/:userid/team', (done) => {
+//     request(app)
+//     .get('/users/1/team')
+//     .set('Accept', 'application/json')
+//     .expect('Content-Type', /json/)
+//     .expect(200, {np
+//       'PG': {'Steph Curry'},
+//       'SG': {'Michael Jordan'},
+//       'SF': {'LeBitch James'},
+//       'PF': {'Tim Duncan'},
+//       'C': {'Shaq'}
+//     }, done);npm
+// });
 });
 
 
