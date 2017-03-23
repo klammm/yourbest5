@@ -7,9 +7,11 @@ exports.up = function(knex, Promise) {
     table.float('ppg').notNullable();
     table.float('apg').notNullable();
     table.float('fgp').notNullable();
+    table.float('twopp').notNullable();
+    table.float('threepp').notNullable();
     table.float('ftp').notNullable();
-    table.float('tpp').notNullable();
     table.float('rpg').notNullable();
+    table.float('orpg').notNullable();
     table.float('bpg').notNullable();
     table.float('spg').notNullable();
     table.float('tpg').notNullable();
