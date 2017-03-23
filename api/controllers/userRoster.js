@@ -128,10 +128,13 @@ function score(req, res) {
         id: player.id,
         name: player.name,
         twopp: player.twopp,
+        twoapg: player.twoapg,
         threepp: player.threepp,
+        threeapg: player.threeapg,
         orpg: player.orpg,
         tpg: player.tpg,
-        ftp: player.ftp
+        ftp: player.ftp,
+        ftapg: player.ftapg
       };
       scoreArr.push(scoreArrObj)
     })
