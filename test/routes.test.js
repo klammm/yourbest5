@@ -68,20 +68,21 @@ suite('users test', () => {
 
 });
 
-  test('GET /users/:userid/team', (done) => {
-    request(app)
-    .get('/users/1/team')
-    .set('Accept', 'application/json')
-    .expect('Content-Type', /json/)
-    .expect(200, {
-      'PG': {'Steph Curry'},
-      'SG': {'Michael Jordan'},
-      'SF': {'LeBitch James'},
-      'PF': {'Tim Duncan'},
-      'C': {'Shaq'}
-    }, done);
 
-});
+//   test('GET /users/:userid/team', (done) => {
+//     request(app)
+//     .get('/users/1/team')
+//     .set('Accept', 'application/json')
+//     .expect('Content-Type', /json/)
+//     .expect(200, {
+//       'PG': {'Steph Curry'},
+//       'SG': {'Michael Jordan'},
+//       'SF': {'LeBitch James'},
+//       'PF': {'Tim Duncan'},
+//       'C': {'Shaq'}
+//     }, done);
+//
+// });
 });
 
 
