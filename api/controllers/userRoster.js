@@ -22,7 +22,6 @@ function findAllUsers(req, res, next) {
         id: user.id,
         first_name: user.first_name,
         last_name: user.last_name,
-        team_id: user.team_id,
       };
       formattedArray.push(formattedObj)
     })
@@ -53,7 +52,11 @@ function findUserTeam(req, res, next) {
   knex('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
-    return knex('players_teams').where('team_id', teamId);
+    if (teamId) {
+      return knex('players_teams').where('team_id', teamId);
+    } else {
+      res.send({message: "No Team Available"}).status(404);
+    }
   })
   .then((team) => {
     let teamArray = team.map((player) => {
@@ -77,7 +80,33 @@ function findUserTeam(req, res, next) {
 }
 
 function deleteTeam(req, res) {
+  // knex delete
 
+  // response
+  knex('users').where('id', req.swagger.params.userid.value)
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('players_teams').where('team_id', teamId);
+  })
+  .then((team) => {
+    let teamArray = team.map((player) => {
+      return player.player_id
+    })
+    let promiseArray = teamArray.map((player) => {
+      return knex('players').where('id', player)
+    })
+    return Promise.all(promiseArray)
+  })
+  .then((knexArray) => {
+    let teamResult = {"PG": 'blank', "SG": 'blank', 'SF': 'blank', 'PF': 'blank', "C": 'blank'};
+    knexArray.forEach((player) => {
+      teamResult[player[0].position] = player[0]
+    })
+    res.send(teamResult)
+  })
+  .catch( (err) => {
+    next(err);
+  })
 }
 
 function addPlayerUserRoster(req, res) {

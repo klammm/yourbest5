@@ -248,7 +248,7 @@ paths:
           format: int64
       responses:
         200:
-          description: Returns an  array of all the players within our database
+          description: Returns the specified player from the database
           schema:
               $ref: '#/definitions/playerResponse'
         default:
@@ -323,9 +323,6 @@ definitions:
         type: string
       last_name:
         type: string
-      team_id:
-        type: integer
-        format: int64
   statResponse:
     required:
       - name

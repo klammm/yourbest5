@@ -15,13 +15,7 @@ module.exports = {
 function allPlayers(req, res) {
   knex('players')
   .then((result) => {
-    const newArray = [];
-    result.forEach((player) => {
-      newArray.push(player)
-    })
-    console.log(result)
-    res.send([{name: 'foxworthington', id: 1}])
-    // res.send(result)
+    res.send(result)
   })
   .catch( (err) => {
     next(err);
@@ -37,18 +31,15 @@ function addPlayerNbaDB(req, res) {
   }
 }
 
+// helper function
 function checkDBForPlayer(player) {
   // check if the DB has this player
 }
 
-function onePlayer(req, res) {
-  knex('players').where('id', req.swagger.params.playerid)
+function onePlayer(req, res, next) {
+  knex('players').where('id', req.swagger.params.playerid.value)
   .then((result) => {
-    if (result) {
-      res.send(result)
-    } else {
-      // prompt the user "Invalid Player ID"
-    }
+    res.send(result[0])
   })
   .catch((err) => {
     next(err);
@@ -56,9 +47,15 @@ function onePlayer(req, res) {
 }
 
 function statRankings(req, res) {
-  knex('players').orderBy(req.swagger.query.stat, 'desc')
+  knex('players').orderBy(req.swagger.params.stat.value, 'desc')
+  .then((result) => {
+    res.send(result)
+  })
+  .catch((err) => {
+    next(err);
+  })
 }
 
 function playerPositionRankings(req, res) {
-
+  
 }

@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
     table.string('last_name').defaultTo('');
     table.string('email').unique().notNullable()
     table.specificType('hashed_password', 'char(60)').notNullable();
-    table.integer('team_id').notNullable().references('id').inTable('teams').onDelete('CASCADE');
+    table.integer('team_id').references('id').inTable('teams').onDelete('SET NULL');
     table.timestamps(true, true);
     })
   };
