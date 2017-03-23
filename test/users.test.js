@@ -47,7 +47,7 @@ suite('users test', () => {
         'last_name': 'Zheng',
         // email: 'KayDaddy@gmail.com',
         // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
-  
+
       }], done)
   });
 
