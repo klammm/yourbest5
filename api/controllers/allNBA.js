@@ -2,6 +2,7 @@
 
 var util = require('util');
 const knex = require('../../knex');
+const fetch = require('node-fetch');
 
 module.exports = {
   allPlayers: allPlayers,
@@ -9,10 +10,11 @@ module.exports = {
   onePlayer: onePlayer,
   statRankings: statRankings,
   playerPositionRankings: playerPositionRankings,
+  playerHighlights: playerHighlights,
 }
 
 
-function allPlayers(req, res) {
+function allPlayers(req, res, next) {
   knex('players')
   .then((result) => {
     res.send(result)
@@ -22,7 +24,7 @@ function allPlayers(req, res) {
   })
 }
 
-function addPlayerNbaDB(req, res) {
+function addPlayerNbaDB(req, res, next) {
   if (checkDBForPlayer(req.swagger.body)) {
     // prompt the user that the player exists already
   } else {
@@ -46,7 +48,7 @@ function onePlayer(req, res, next) {
   })
 }
 
-function statRankings(req, res) {
+function statRankings(req, res, next) {
   knex('players').orderBy(req.swagger.params.stat.value, 'desc')
   .then((result) => {
     res.send(result)
@@ -56,6 +58,24 @@ function statRankings(req, res) {
   })
 }
 
-function playerPositionRankings(req, res) {
-  
+function playerPositionRankings(req, res, next) {
+
+}
+
+function playerHighlights(req, res, next) {
+  const apiKey = process.env.YOUTUBE_KEY;
+  knex('players').where('id', req.swagger.params.playerid.value)
+  .then((result) => {
+    let player = result[0].name;
+    player = player.split(' ').join('+')
+    console.log(player)
+    return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${player}` + `+highlights&type=video&key=${apiKey}`)
+  })
+  .then((fetchResult) => {
+    // Bad request. API key not working
+    console.log(fetchResult)
+  })
+  .catch((err) => {
+    next(err);
+  })
 }

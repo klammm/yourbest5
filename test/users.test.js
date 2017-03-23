@@ -39,16 +39,10 @@ suite('users test', () => {
         'id': 1,
         'first_name': 'Kevin',
         'last_name': 'KlamJohnson',
-        // email: 'KlamJohnson@gmail.com',
-        // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
-        'team_id': 1
       }, {
         'id': 2,
         'first_name': 'KayDaddy',
         'last_name': 'Zheng',
-        // email: 'KayDaddy@gmail.com',
-        // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
-        'team_id': 2
       }], done)
   });
 
@@ -61,9 +55,6 @@ suite('users test', () => {
       'id': 1,
       'first_name': 'Kevin',
       'last_name': 'KlamJohnson',
-      // email: 'KlamJohnson@gmail.com',
-      // hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
-      'team_id': 1
     }, done);
 
 });

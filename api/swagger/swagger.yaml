@@ -255,6 +255,27 @@ paths:
           description: unexpected error
           schema:
               $ref: '#/definitions/ErrorResponse'
+  /nba/{playerid}/highlights:
+    x-swagger-router-controller: allNBA
+    get:
+      description: Returns a youtube url with highlights of the specific player
+      operationId: playerHighlights
+      parameters:
+        - name: playerid
+          in: path
+          description: The player id being searched for
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: Returns the highlight url for the player
+          schema:
+              $ref: '#/definitions/youtubeResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
   /nba/rankings/{stat}:
     x-swagger-router-controller: allNBA
     get:
@@ -323,6 +344,8 @@ definitions:
         type: string
       last_name:
         type: string
+  youtubeResponse:
+    type: string
   statResponse:
     required:
       - name
