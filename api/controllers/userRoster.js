@@ -130,7 +130,12 @@ function score(req, res) {
       };
       scoreArr.push(scoreArrObj)
     })
-    res.send(scoreArr)
+    // res.send(scoreArr)
+    return Promise.all(scoreArr)
+  })
+  .then((score) => {
+    console.log(score);
+    res.send(score)
   })
   .catch((err) => {
     next(err);

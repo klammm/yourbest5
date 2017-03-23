@@ -11,22 +11,25 @@ const knex = require('../knex');
 
 
 suite('nba DB test', () => {
-  before((done) => {
-    knex.migrate.latest()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
-  });
-
+  // before((done) => {
+  //   knex.migrate.latest()
+  //     .then(() => {
+  //       done();
+  //     })
+  //     .catch((err) => {
+  //       done(err);
+  //     });
+  // });
   beforeEach((done) => {
-    knex.seed.run()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
+    knex.migrate.rollback()
+    .then(() => {
+      return knex.migrate.latest();
+    })
+    .then(() => {
+      knex.seed.run();
+      done();
+    })
+    .catch((err) => {
         done(err);
       });
   });
