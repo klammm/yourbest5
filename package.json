@@ -12,10 +12,12 @@
     "express-validation": "^1.0.2",
     "knex": "^0.12.8",
     "morgan": "^1.8.1",
+    "node-fetch": "^1.6.3",
     "pg": "^6.1.5",
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
+    "mocha": "^3.2.0",
     "should": "^7.1.0",
     "supertest": "^1.0.0"
   },
