@@ -118,21 +118,21 @@ function updatePlayer(req, res) {
 }
 
 function score(req, res) {
-  knex('scores')
-  .then((usersArray) => {
-    // console.log(usersArray);
-    const scoreArr = [];
-    usersArray.forEach((player) => {
-      let scoreArrObj = {
-        id: player.id,
-        // name: player.first_name,
-        score: player.score
-      };
-      scoreArr.push(scoreArrObj)
-    })
-    res.send(scoreArr)
-  })
-  .catch((err) => {
-    next(err);
-  })
+  // knex('scores')
+  // .then((usersArray) => {
+  //   // console.log(usersArray);
+  //   const scoreArr = [];
+  //   usersArray.forEach((player) => {
+  //     let scoreArrObj = {
+  //       id: player.id,
+  //       // name: player.first_name,
+  //       score: player.score
+  //     };
+  //     scoreArr.push(scoreArrObj)
+  //   })
+  //   res.send(scoreArr)
+  // })
+  // .catch((err) => {
+  //   next(err);
+  // })
 }
