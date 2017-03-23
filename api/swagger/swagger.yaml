@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "0.0.1"
-  title: Hello World App
+  title: YourBest5(+weather)
 # during dev, should point to your local machine
 host: localhost:10010
 # basePath prefixes all resource paths
@@ -19,7 +19,7 @@ produces:
 paths:
   # USER ROSTER
 
-  /users:
+  /api/users:
     x-swagger-router-controller: userRoster
     get:
       description: Returns all the users in our database
@@ -37,7 +37,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /users/{userid}:
+  /api/users/{userid}:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the specific user's info
@@ -60,7 +60,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /users/{userid}/team:
+  /api/users/{userid}/team:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the user's team
@@ -83,11 +83,12 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
+    post:
+      description: create a new team
+      operationId:
     delete:
       description: Deletes the user's team
       operationId: deleteTeam
-      produces:
-        - application/json
       parameters:
         - name: userid
           in: path
@@ -96,7 +97,7 @@ paths:
           type: integer
           format: int64
       responses:
-        204:
+        200:
           description: Team deleted
           schema:
             $ref: '#/definitions/rosterResponse'
@@ -104,7 +105,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /users/{userid}/team/player:
+  /api/users/{userid}/team/player:
     x-swagger-router-controller: userRoster
     post:
       description: Add one player to the team
@@ -128,12 +129,12 @@ paths:
           description: New player to be added to the team
           required: true
           schema:
-            $ref: '#/definitions/playerResponse'
+            $ref: '#/definitions/getPlayerResponse'
       responses:
         200:
           description: Returns a JSON object of the user's team
           schema:
-            $ref: '#/definitions/rosterResponse'
+            $ref: '#/definitions/teamResponse'
         default:
           description: unexpected error
           schema:
@@ -160,17 +161,17 @@ paths:
           description: New player to be added to the team
           required: true
           schema:
-            $ref: '#/definitions/playerResponse'
+            $ref: '#/definitions/getPlayerResponse'
       responses:
         200:
           description: Returns a JSON object of the user's team
           schema:
-            $ref: '#/definitions/playerResponse'
+            $ref: '#/definitions/getPlayerResponse'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /users/{userid}/team/score:
+  /api/users/{userid}/team/score:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the team's +/- score
@@ -193,7 +194,7 @@ paths:
             description: unexpected error
             schema:
               $ref: '#/definitions/ErrorResponse'
-  /nba:
+  /api/nba:
     x-swagger-router-controller: allNBA
     get:
       description: Returns all players from the database
@@ -206,7 +207,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/playerResponse'
+              $ref: '#/definitions/getPlayerResponse'
         default:
             description: unexpected error
             schema:
@@ -222,17 +223,17 @@ paths:
           description: new player being added to the database
           required: false
           schema:
-            $ref: '#/definitions/playerResponse'
+            $ref: '#/definitions/postPlayerResponse'
       responses:
         200:
           description: returns the new player being added
           schema:
-            $ref: '#/definitions/playerResponse'
+            $ref: '#/definitions/postPlayerResponse'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /nba/{playerid}:
+  /api/nba/{playerid}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns a specific player from the database
@@ -250,12 +251,12 @@ paths:
         200:
           description: Returns the specified player from the database
           schema:
-              $ref: '#/definitions/playerResponse'
+              $ref: '#/definitions/getPlayerResponse'
         default:
           description: unexpected error
           schema:
               $ref: '#/definitions/ErrorResponse'
-  /nba/{playerid}/highlights:
+  /api/nba/{playerid}/highlights:
     x-swagger-router-controller: allNBA
     get:
       description: Returns a youtube url with highlights of the specific player
@@ -276,7 +277,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /nba/rankings/{stat}:
+  /api/nba/rankings/{stat}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for a certain stat
@@ -300,7 +301,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /nba/rankings/positions/{position}:
+  /api/nba/rankings/positions/{position}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for a certain position
@@ -319,7 +320,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/playerResponse'
+              $ref: '#/definitions/getPlayerResponse'
         default:
           description: unexpected error
           schema:
@@ -363,7 +364,41 @@ definitions:
       score:
         type: number
         format: float
-  playerResponse:
+  postPlayerResponse:
+    required:
+      - name
+      - position
+    type: object
+    properties:
+      name:
+        type: string
+      position:
+        type: string
+      ppg:
+        type: number
+        format: float
+      apg:
+        type: number
+        format: float
+      fgp:
+        type: number
+        format: float
+      ftp:
+        type: number
+        format: float
+      rpg:
+        type: number
+        format: float
+      bpg:
+        type: number
+        format: float
+      spg:
+        type: number
+        format: float
+      tpg:
+        type: number
+        format: float
+  getPlayerResponse:
     required:
       - name
       - id
@@ -374,7 +409,7 @@ definitions:
         format: int64
       name:
         type: string
-      image:
+      position:
         type: string
       ppg:
         type: number
@@ -401,9 +436,6 @@ definitions:
         type: number
         format: float
   rosterResponse:
-    required:
-      - id
-      - name
     type: object
     properties:
       id:
@@ -422,7 +454,7 @@ definitions:
             format: int64
           name:
             type: string
-          image:
+          position:
             type: string
           ppg:
             type: number
@@ -456,7 +488,7 @@ definitions:
             format: int64
           name:
             type: string
-          image:
+          position:
             type: string
           ppg:
             type: number
@@ -490,7 +522,7 @@ definitions:
             format: int64
           name:
             type: string
-          image:
+          position:
             type: string
           ppg:
             type: number
@@ -524,7 +556,7 @@ definitions:
             format: int64
           name:
             type: string
-          image:
+          position:
             type: string
           ppg:
             type: number
@@ -558,7 +590,7 @@ definitions:
             format: int64
           name:
             type: string
-          image:
+          position:
             type: string
           ppg:
             type: number

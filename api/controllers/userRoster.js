@@ -79,10 +79,28 @@ function findUserTeam(req, res, next) {
   })
 }
 
-function deleteTeam(req, res) {
-  // knex delete
+function deleteTeam(req, res, next) {
+  knex('users').where('id', req.swagger.params.userid.value)
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('teams').where('id', teamId);
+  })
+  .then((team) => {
+    let result = {
+      id: Number(team[0].id),
+      name: team[0].name.toString()
+    }
+    res.send(result)
+    return knex('teams').where('id', team[0].id).del();
+  })
+  .catch( (err) => {
+    next(err);
+  })
+}
 
-  // response
+function addPlayerUserRoster(req, res, next) {
+  let teamResult;
+  let playerToBeReplaced;
   knex('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
@@ -98,10 +116,20 @@ function deleteTeam(req, res) {
     return Promise.all(promiseArray)
   })
   .then((knexArray) => {
-    let teamResult = {"PG": 'blank', "SG": 'blank', 'SF': 'blank', 'PF': 'blank', "C": 'blank'};
+    teamResult = {"PG": 'blank', "SG": 'blank', 'SF': 'blank', 'PF': 'blank', "C": 'blank'};
     knexArray.forEach((player) => {
       teamResult[player[0].position] = player[0]
     })
+    let query = req.query.position
+    playerToBeReplaced = teamResult[query].id;
+    return knex('users').where('id', req.swagger.params.userid.value);
+  })
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('players_teams').where({'team_id': teamId, 'player_id': playerToBeReplaced}).update('player_id', req.body.id);
+  })
+  .then((team) => {
+    teamResult[req.query.position] = req.body
     res.send(teamResult)
   })
   .catch( (err) => {
@@ -109,14 +137,10 @@ function deleteTeam(req, res) {
   })
 }
 
-function addPlayerUserRoster(req, res) {
+function updatePlayer(req, res, next) {
 
 }
 
-function updatePlayer(req, res) {
-
-}
-
-function score(req, res) {
+function score(req, res, next) {
 
 }

@@ -4,7 +4,6 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.string('name').notNullable();
     table.string('position').notNullable();
-    table.string('image');
     table.float('ppg').notNullable();
     table.float('apg').notNullable();
     table.float('fgp').notNullable();
