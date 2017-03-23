@@ -33,7 +33,7 @@ function findAllUsers(req, res, next) {
 }
 
 function findUser(req, res, next) {
-  knex.select('first_name','id','last_name','team_id').from('users').where('id', req.swagger.params.userid.value)
+  knex.select('first_name','id','last_name').from('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
     if (result.length < 1) {
       res.send({message: "User not found"}).status(404);
