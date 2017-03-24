@@ -390,6 +390,7 @@ definitions:
       score:
         type: number
         format: float
+
   updatePlayerResponse:
     type: integer
     format: int64

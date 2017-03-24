@@ -13,17 +13,17 @@ exports.seed = function(knex, Promise) {
         {
           id: 2,
           player_id: 8,
-          team_id: 1,
+          team_id: 2,
         },
         {
           id: 3,
           player_id: 7,
-          team_id: 1,
+          team_id: 3,
         },
         {
           id: 4,
           player_id: 5,
-          team_id: 1,
+          team_id: 4,
         },
         {
           id: 5,
