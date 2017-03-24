@@ -388,32 +388,8 @@ definitions:
       - score
     properties:
       score:
-        type: object
-        properties:
-          twopp:
-            type: number
-            format: float
-          twoapg:
-            type: number
-            format: float
-          threepp:
-            type: number
-            format: float
-          threeapg:
-            type: number
-            format: float
-          orpg:
-            type: number
-            format: float
-          tpg:
-            type: number
-            format: float
-          ftp:
-            type: number
-            format: float
-          ftapg:
-            type: number
-            format: float
+        type: number
+        format: float
 
   updatePlayerResponse:
     type: integer

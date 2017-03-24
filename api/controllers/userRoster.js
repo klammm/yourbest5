@@ -239,8 +239,15 @@ function score(req, res, next) {
 
     })
     .then((val) => {
-      console.log(val);
-      // res.send(val)
+
+        console.log('val is ', val);
+
+
+      let team = {
+        score: 119.1
+      };
+      // console.log(team);
+      res.send(team)
     })
 
   .catch((err) => {
