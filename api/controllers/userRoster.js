@@ -118,6 +118,19 @@ function updatePlayer(req, res) {
 }
 
 function score(req, res, next) {
+  //   knex.select(
+  //   'id',
+  //   'name',
+  //   'twopp',
+  //   'twoap',
+  //   'threepp',
+  //   'threeapg',
+  //   'orpg',
+  //   'tpg',
+  //   'ftp',
+  //   'ftapg')
+  // .from('teams').where('id', req.swagger.params.userid.value)
+
   knex('players_teams').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
@@ -140,6 +153,7 @@ function score(req, res, next) {
     const scoreArr = [];
     usersArray.forEach((player) => {
       player.filter((item) => {
+        console.log('item is!!! ' ,item);
       let scoreArrObj = {
         id: item.id,
         name: item.name,
@@ -155,20 +169,9 @@ function score(req, res, next) {
       scoreArr.push(scoreArrObj)
       })
     })
-    // res.send(scoreArr)
-    return Promise.all(scoreArr)
+    res.send(scoreArr)
+    // return Promise.all(scoreArr)
   })
-  .then((PlayerStat) => {
-
-    let twopp = (PlayerStat[0].twopp + PlayerStat[1].twopp + PlayerStat[2].twopp + PlayerStat[3].twopp + PlayerStat[4].twopp)/PlayerStat.length;
-    let twoppVar = (PlayerStat[0].twopp + PlayerStat[1].twopp + PlayerStat[2].twopp + PlayerStat[3].twopp + PlayerStat[4].twopp)/PlayerStat.length;
-    let threepp = (PlayerStat[0].threepp + PlayerStat[1].threepp + PlayerStat[2].threepp + PlayerStat[3].threepp + PlayerStat[4].threepp)/PlayerStat.length;
-
-    return {twopp, twoppVar, threepp}
-})
-.then((val) => {
-  console.log('val is ', val);
-})
   .catch((err) => {
     next(err);
   })
