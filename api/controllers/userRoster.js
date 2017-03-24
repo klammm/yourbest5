@@ -118,19 +118,6 @@ function updatePlayer(req, res) {
 }
 
 function score(req, res, next) {
-  //   knex.select(
-  //   'id',
-  //   'name',
-  //   'twopp',
-  //   'twoap',
-  //   'threepp',
-  //   'threeapg',
-  //   'orpg',
-  //   'tpg',
-  //   'ftp',
-  //   'ftapg')
-  // .from('teams').where('id', req.swagger.params.userid.value)
-
   knex('players_teams').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
@@ -168,11 +155,13 @@ function score(req, res, next) {
       };
        scoreArr.push(scoreArrObj)
       })
-          // return Promise.all(scoreArrObj)
+      return scoreArr;
     })
-    return scoreArr
+    return Promise.all(scoreArr)
+    // return scoreArr
   })
     .then((scoreArr) => {
+      // console.log(scoreArr[2]);
       let totals = [];
       // console.log(scoreArr);
       let teamTotals = {
@@ -187,6 +176,7 @@ function score(req, res, next) {
       }
 
     scoreArr.forEach((stats) => {
+      // console.log('stats are ', stats.twopp);
       teamTotals.twopp += stats.twopp,
       teamTotals.twoapg += stats.twoapg,
       teamTotals.threepp += stats.threepp,
@@ -196,17 +186,16 @@ function score(req, res, next) {
       teamTotals.ftp += stats.ftp,
       teamTotals.ftapg += stats.ftapg
     })
-
-
-
     return teamTotals
 
     })
-    .then((val) => {
-      console.log(val);
-    })
+    // .then((val) => {
+    //   console.log('val are', val);
+    //   // res.send(val)
+    // })
 
   .catch((err) => {
-    next(err);
+    // next(err);
+    console.error();(err);
   })
 }
