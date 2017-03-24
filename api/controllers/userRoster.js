@@ -153,7 +153,7 @@ function score(req, res, next) {
     const scoreArr = [];
     usersArray.forEach((player) => {
       player.filter((item) => {
-        console.log('item is!!! ' ,item);
+        // console.log('item is!!! ' ,item);
       let scoreArrObj = {
         id: item.id,
         name: item.name,
@@ -166,12 +166,46 @@ function score(req, res, next) {
         ftp: item.ftp,
         ftapg: item.ftapg
       };
-      scoreArr.push(scoreArrObj)
+       scoreArr.push(scoreArrObj)
       })
+          // return Promise.all(scoreArrObj)
     })
-    res.send(scoreArr)
-    // return Promise.all(scoreArr)
+    return scoreArr
   })
+    .then((scoreArr) => {
+      let totals = [];
+      // console.log(scoreArr);
+      let teamTotals = {
+        twopp : 0,
+        twoapg : 0,
+        threepp : 0,
+        threeapg : 0,
+        orpg : 0,
+        tpg : 0,
+        ftp : 0,
+        ftapg : 0
+      }
+
+    scoreArr.forEach((stats) => {
+      teamTotals.twopp += stats.twopp,
+      teamTotals.twoapg += stats.twoapg,
+      teamTotals.threepp += stats.threepp,
+      teamTotals.threeapg += stats.threeapg,
+      teamTotals.orpg += stats.orpg,
+      teamTotals.tpg += stats.tpg,
+      teamTotals.ftp += stats.ftp,
+      teamTotals.ftapg += stats.ftapg
+    })
+
+
+
+    return teamTotals
+
+    })
+    .then((val) => {
+      console.log(val);
+    })
+
   .catch((err) => {
     next(err);
   })
