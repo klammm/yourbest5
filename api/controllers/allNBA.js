@@ -11,6 +11,7 @@ module.exports = {
   statRankings: statRankings,
   playerPositionRankings: playerPositionRankings,
   playerHighlights: playerHighlights,
+  mostPickedPlayerRankings: mostPickedPlayerRankings,
 }
 
 
@@ -72,6 +73,50 @@ function statRankings(req, res, next) {
   knex('players').orderBy(req.swagger.params.stat.value, 'desc')
   .then((result) => {
     res.send(result)
+  })
+  .catch((err) => {
+    next(err);
+  })
+}
+
+function mostPickedPlayerRankings(req, res, next) {
+  const occurences = {};
+  knex('players_teams').orderBy('player_id', 'asc').select('player_id')
+  .then((arrayOfPlayersPicked) => {
+    const nonDuplicatePlayersPickedArray = [];
+
+    arrayOfPlayersPicked.map((playerId) => {
+      if (occurences[playerId.player_id] === undefined) {
+        occurences[playerId.player_id] = 1
+      } else {
+        occurences[playerId.player_id]++
+      }
+    })
+    for(var playerIdNumber in occurences) {
+      nonDuplicatePlayersPickedArray.push(playerIdNumber)
+    };
+    let promiseArray = nonDuplicatePlayersPickedArray.map((playerId) => {
+      return knex('players').where('id', playerId)
+    })
+    return Promise.all(promiseArray)
+  })
+  .then((knexArray) => {
+    let resultArray = [];
+    knexArray.forEach((extraArrayLayer) => {
+      extraArrayLayer.forEach((player) => {
+        const resultObj = {};
+        resultObj['name'] = player.name
+        resultObj['player_id'] = player.id
+        resultObj['picked'] = occurences[player.id]
+        resultArray.push(resultObj)
+        console.log('Result obj:', resultObj)
+      })
+    })
+    resultArray.sort((a, b) => {
+      return b.picked - a.picked
+    })
+    console.log(resultArray)
+    res.send(resultArray)
   })
   .catch((err) => {
     next(err);

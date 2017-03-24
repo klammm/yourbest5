@@ -132,38 +132,38 @@ paths:
             $ref: '#/definitions/ErrorResponse'
   /api/users/{userid}/team/player:
     x-swagger-router-controller: userRoster
-    post:
-      description: Add one player to the team
-      operationId: addPlayerUserRoster
-      produces:
-        - application/json
-      parameters:
-        - name: userid
-          in: path
-          description: The user id that is logged in
-          required: true
-          type: integer
-          format: int64
-        - name: position
-          in: query
-          description: The position seeking to be placed into
-          required: true
-          type: string
-        - in: body
-          name: newPlayer
-          description: ID of the player to be added
-          required: true
-          schema:
-            $ref: '#/definitions/getPlayerResponse'
-      responses:
-        200:
-          description: Returns a JSON object of the user's team
-          schema:
-            $ref: '#/definitions/teamResponse'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
+    # post:
+    #   description: Add one player to the team
+    #   operationId: addPlayerUserRoster
+    #   produces:
+    #     - application/json
+    #   parameters:
+    #     - name: userid
+    #       in: path
+    #       description: The user id that is logged in
+    #       required: true
+    #       type: integer
+    #       format: int64
+    #     - name: position
+    #       in: query
+    #       description: The position seeking to be placed into
+    #       required: true
+    #       type: string
+    #     - in: body
+    #       name: newPlayer
+    #       description: ID of the player to be added
+    #       required: true
+    #       schema:
+    #         $ref: '#/definitions/getPlayerResponse'
+    #   responses:
+    #     200:
+    #       description: Returns a JSON object of the user's team
+    #       schema:
+    #         $ref: '#/definitions/teamResponse'
+    #     default:
+    #       description: unexpected error
+    #       schema:
+    #         $ref: '#/definitions/ErrorResponse'
     put:
       description: Replace a player in the team
       operationId: updatePlayer
@@ -184,7 +184,7 @@ paths:
           format: int64
         - in: body
           name: newPlayer
-          description: New player to be added to the team
+          description: the player id of the new player being added in
           required: true
           schema:
             $ref: '#/definitions/updatePlayerResponse'
@@ -327,30 +327,46 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/nba/rankings/positions/{position}:
+  /api/nba/rankings/player:
     x-swagger-router-controller: allNBA
     get:
-      description: Returns the rankings for a certain position
-      operationId: playerPositionRankings
-      produces:
-        - application/json
-      parameters:
-        - name: position
-          in: path
-          description: The position being searched for
-          required: true
-          type: string
+      description: Returns the rankings for most picked player
+      operationId: mostPickedPlayerRankings
       responses:
         200:
-          description: Returns an array of all the most picked players for that position
+          description: Returns an array of all the stats in order
           schema:
             type: array
             items:
-              $ref: '#/definitions/getPlayerResponse'
+              $ref: '#/definitions/mostPickedPlayerResponse'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
+  # /api/nba/rankings/positions/{position}:
+  #   x-swagger-router-controller: allNBA
+  #   get:
+  #     description: Returns the rankings for a certain position
+  #     operationId: playerPositionRankings
+  #     produces:
+  #       - application/json
+  #     parameters:
+  #       - name: position
+  #         in: path
+  #         description: The position being searched for
+  #         required: true
+  #         type: string
+  #     responses:
+  #       200:
+  #         description: Returns an array of all the most picked players for that position
+  #         schema:
+  #           type: array
+  #           items:
+  #             $ref: '#/definitions/getPlayerResponse'
+  #       default:
+  #         description: unexpected error
+  #         schema:
+  #           $ref: '#/definitions/ErrorResponse'
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -373,6 +389,17 @@ definitions:
         type: string
   youtubeResponse:
     type: string
+  mostPickedPlayerResponse:
+    type: object
+    properties:
+      name:
+        type: string
+      player_id:
+        type: integer
+        format: int64
+      picked:
+        type: integer
+        format: int64
   statResponse:
     required:
       - name
