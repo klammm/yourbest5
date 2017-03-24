@@ -11,6 +11,7 @@ module.exports = {
   addPlayerUserRoster: addPlayerUserRoster,
   updatePlayer: updatePlayer,
   score: score,
+  createTeam: createTeam,
 }
 
 function findAllUsers(req, res, next) {
@@ -47,8 +48,6 @@ function findUser(req, res, next) {
 }
 
 function findUserTeam(req, res, next) {
-  // grab the user from {userid} -> grab the team_id -> form the JSON object with the player_id matching the team_id
-  // -> placing each player_id into their respective positions PG: player_id.position,
   knex('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
@@ -75,6 +74,20 @@ function findUserTeam(req, res, next) {
     res.send(teamResult)
   })
   .catch( (err) => {
+    next(err);
+  })
+}
+
+function createTeam(req, res, next) {
+  knex('users').where({'id': req.swagger.params.userid.value, 'team_id': null})
+  .then((result) => {
+    let team = {name: req.body};
+    return knex('teams').insert(team, '*');
+  })
+  .then((responseTeam) => {
+    res.send(responseTeam[0])
+  })
+  .catch((err) => {
     next(err);
   })
 }
@@ -138,9 +151,23 @@ function addPlayerUserRoster(req, res, next) {
 }
 
 function updatePlayer(req, res, next) {
-
+  knex('users').where('id', req.swagger.params.userid.value)
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('players_teams').where({'team_id': teamId, 'player_id': req.query.currentPlayerID}).update('player_id', req.body);
+  })
+  .then(() => {
+    return knex('players').where('id', req.body);
+  })
+  .then((result) => {
+    res.send(result[0])
+  })
+  .catch( (err) => {
+    next(err);
+  })
 }
 
+// product of General Deep
 function score(req, res) {
   knex('scores')
   .then((usersArray) => {

@@ -9,6 +9,7 @@ basePath: /
 #
 schemes:
   # tip: remove http to make production-grade
+  - http
   - https
 # format of bodies a client can send (Content-Type)
 consumes:
@@ -84,8 +85,32 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
     post:
-      description: create a new team
-      operationId:
+      description: create a new team for the user
+      operationId: createTeam
+      produces:
+        - application/json
+      parameters:
+        - name: userid
+          in: path
+          description: The user id that is logged in
+          required: true
+          type: integer
+          format: int64
+        - in: body
+          name: newPlayer
+          description: New player to be added to the team
+          required: true
+          schema:
+            $ref: '#/definitions/postRosterResponse'
+      responses:
+        200:
+          description: Returns a JSON object of the user's newly created team
+          schema:
+            $ref: '#/definitions/teamResponse'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
     delete:
       description: Deletes the user's team
       operationId: deleteTeam
@@ -126,7 +151,7 @@ paths:
           type: string
         - in: body
           name: newPlayer
-          description: New player to be added to the team
+          description: ID of the player to be added
           required: true
           schema:
             $ref: '#/definitions/getPlayerResponse'
@@ -151,20 +176,21 @@ paths:
           required: true
           type: integer
           format: int64
-        - name: position
+        - name: currentPlayerID
           in: query
           description: The position seeking to be placed into
           required: true
-          type: string
+          type: integer
+          format: int64
         - in: body
           name: newPlayer
           description: New player to be added to the team
           required: true
           schema:
-            $ref: '#/definitions/getPlayerResponse'
+            $ref: '#/definitions/updatePlayerResponse'
       responses:
         200:
-          description: Returns a JSON object of the user's team
+          description: Returns a JSON object of the chosen update player
           schema:
             $ref: '#/definitions/getPlayerResponse'
         default:
@@ -364,6 +390,9 @@ definitions:
       score:
         type: number
         format: float
+  updatePlayerResponse:
+    type: integer
+    format: int64
   postPlayerResponse:
     required:
       - name
@@ -443,6 +472,8 @@ definitions:
         format: int64
       name:
         type: string
+  postRosterResponse:
+    type: string
   teamResponse:
     type: object
     properties:

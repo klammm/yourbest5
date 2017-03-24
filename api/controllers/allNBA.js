@@ -33,7 +33,7 @@ function addPlayerNbaDB(req, res, next) {
   }
 }
 
-// helper function
+// helper function for addPlayerNbaDB
 function checkDBForPlayer(player) {
   // check if the DB has this player
 }
@@ -72,10 +72,20 @@ function playerHighlights(req, res, next) {
     return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${player}` + `+highlights&type=video&key=${apiKey}`)
   })
   .then((fetchResult) => {
-    // Bad request. API key not working
-    console.log(fetchResult)
+    return fetchResult.json()
+  })
+  .then((fetchJson) => {
+    let videoId = fetchJson.items[0].id.videoId;
+    let title = fetchJson.items[0].snippet.title;
+    console.log(videoId)
+    console.log(title)
   })
   .catch((err) => {
     next(err);
   })
+}
+
+// helper function for playerHighlights
+function youtubeTitleCleaner(string) {
+  
 }
