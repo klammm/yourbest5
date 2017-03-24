@@ -240,13 +240,22 @@ function score(req, res, next) {
     })
     .then((val) => {
 
-        console.log('val is ', val);
+      let teamTPG = val.tpg * 0.5 //weighing t/o by half, decrease FGA by this #
+      let teamORPG = val.orpg * 0.5;
+      let team2PP = val.twopp/5;
+      let team2APG = val.twoapg - teamTPG + teamORPG;
+      let team3PP = val.threepp/5;
+      let team3APG = val.threeapg;
+      let teamFTP = val.ftp/5;
+      let teamtFTM = val.ftapg * teamFTP;
 
+
+
+      let score = teamtFTM+team2APG+team3APG
 
       let team = {
-        score: 119.1
+        score: score
       };
-      // console.log(team);
       res.send(team)
     })
 
