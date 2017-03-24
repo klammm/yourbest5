@@ -7,10 +7,6 @@
   "author": "",
   "license": "",
   "main": "app.js",
-  "scripts": {
-    "heroku-postbuild": "knex migrate:latest",
-    "knex": "knex",
-  },
   "dependencies": {
     "cors": "^2.8.1",
     "express": "^4.12.3",
@@ -29,6 +25,8 @@
     "supertest": "^1.0.0"
   },
   "scripts": {
+    "heroku-postbuild": "knex migrate:latest",
+    "knex": "knex",
     "start": "node app.js",
     "test": "node_modules/mocha/bin/mocha"
   }
