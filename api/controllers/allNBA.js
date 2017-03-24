@@ -64,11 +64,12 @@ function playerPositionRankings(req, res, next) {
 
 function playerHighlights(req, res, next) {
   const apiKey = process.env.YOUTUBE_KEY;
+  let player;
   knex('players').where('id', req.swagger.params.playerid.value)
   .then((result) => {
-    let player = result[0].name;
+    player = result[0].name;
     player = player.split(' ').join('+')
-    console.log(player)
+    // console.log(player)
     return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${player}` + `+highlights&type=video&key=${apiKey}`)
   })
   .then((fetchResult) => {
@@ -77,8 +78,11 @@ function playerHighlights(req, res, next) {
   .then((fetchJson) => {
     let videoId = fetchJson.items[0].id.videoId;
     let title = fetchJson.items[0].snippet.title;
-    console.log(videoId)
-    console.log(title)
+    if (youtubeTitleCleaner(player, title)) {
+      res.send({url: `https://www.youtube.com/watch?v=${videoId}`})
+    } else {
+      res.send({error: 'My apologies. It seems we have some discussing to do about the result. Please make a pull request.'}).status(500)
+    }
   })
   .catch((err) => {
     next(err);
@@ -86,6 +90,17 @@ function playerHighlights(req, res, next) {
 }
 
 // helper function for playerHighlights
-function youtubeTitleCleaner(string) {
-  
+function youtubeTitleCleaner(string, stringComparison) {
+  // Example input: Michael Jordan's Top 50 all time plays
+  let stringsToCompare = string.split('+');
+  let regexString = '';
+  for (let i = 0; i < stringsToCompare.length; i++) {
+    if (i === stringsToCompare.length - 1) {
+      regexString += '(' + stringsToCompare[i] + ")"
+    } else {
+      regexString += '(' + stringsToCompare[i] + ")" + String.raw`\s+`
+    }
+  }
+  const regex = new RegExp(regexString, "ig")
+  return regex.test(stringComparison)
 }
