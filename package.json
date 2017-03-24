@@ -8,6 +8,7 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "cors": "^2.8.1",
     "express": "^4.12.3",
     "express-validation": "^1.0.2",
     "joi": "^10.3.0",
