@@ -109,13 +109,11 @@ function mostPickedPlayerRankings(req, res, next) {
         resultObj['player_id'] = player.id
         resultObj['picked'] = occurences[player.id]
         resultArray.push(resultObj)
-        console.log('Result obj:', resultObj)
       })
     })
     resultArray.sort((a, b) => {
       return b.picked - a.picked
     })
-    console.log(resultArray)
     res.send(resultArray)
   })
   .catch((err) => {
@@ -124,7 +122,7 @@ function mostPickedPlayerRankings(req, res, next) {
 }
 
 function playerPositionRankings(req, res, next) {
-  
+
 }
 
 function playerHighlights(req, res, next) {
@@ -134,7 +132,6 @@ function playerHighlights(req, res, next) {
   .then((result) => {
     player = result[0].name;
     player = player.split(' ').join('+')
-    // console.log(player)
     return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${player}` + `+highlights&type=video&key=${apiKey}`)
   })
   .then((fetchResult) => {
@@ -156,7 +153,8 @@ function playerHighlights(req, res, next) {
 
 // helper function for playerHighlights
 function youtubeTitleCleaner(string, stringComparison) {
-  // Example input: Michael Jordan's Top 50 all time plays
+  // Example input for stringComparison: Michael Jordan's Top 50 all time plays
+  // Example input for string: Michael+Jordan, Shaquille+O'+Neal
   let stringsToCompare = string.split('+');
   let regexString = '';
   for (let i = 0; i < stringsToCompare.length; i++) {

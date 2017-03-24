@@ -24,14 +24,11 @@ const data = [{
 
 
 exports.seed = function(knex, Promise) {
-  //delete all existing rolls if any -- maybe you run the seed file too many times
   return knex('users').del()
     .then(function() {
-      //then insert the data
       return knex('users').insert(data);
     })
     .then(function() {
-      //update id to the maximum id using raw SQL
       return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) from users));");
     });
 }

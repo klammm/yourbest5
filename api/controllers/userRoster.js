@@ -172,7 +172,6 @@ function updatePlayer(req, res, next) {
 function score(req, res, next) {
   knex('players_teams').where('id', req.swagger.params.userid.value)
   .then((result) => {
-    console.log('result is ', result);
     let teamId = result[0].team_id;
     if (teamId) {
       return knex('players_teams').where('team_id', teamId);
@@ -190,11 +189,9 @@ function score(req, res, next) {
     return Promise.all(promiseArray)
   })
   .then((usersArray) => {
-    console.log('usersArray is, ', usersArray.length);
     const scoreArr = [];
     usersArray.forEach((player) => {
       player.filter((item) => {
-        // console.log('item is!!! ' ,item);
       let scoreArrObj = {
         id: item.id,
         name: item.name,
@@ -209,13 +206,11 @@ function score(req, res, next) {
       };
        scoreArr.push(scoreArrObj)
       })
-          // return Promise.all(scoreArrObj)
     })
     return scoreArr
   })
     .then((scoreArr) => {
       let totals = [];
-      // console.log(scoreArr);
       let teamTotals = {
         twopp : 0,
         twoapg : 0,
@@ -252,7 +247,6 @@ function score(req, res, next) {
       let teamtFTM = val.ftapg * teamFTP;
 
       let score = teamtFTM+team2APG+team3APG
-      console.log(score);
       let team = {
         score: score
       };
