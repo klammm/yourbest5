@@ -1,6 +1,6 @@
 # YourBest5(+highlights)
 
-_**Version 1.0.0**_
+_**Version 0.0.1 ALPHA**_
 
 _3/24/2017_
 
