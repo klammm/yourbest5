@@ -79,7 +79,7 @@ function statRankings(req, res, next) {
 }
 
 function playerPositionRankings(req, res, next) {
-
+  
 }
 
 function playerHighlights(req, res, next) {
