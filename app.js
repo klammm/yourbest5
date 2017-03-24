@@ -3,6 +3,9 @@
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 var config = {
   appRoot: __dirname // required config

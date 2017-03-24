@@ -197,7 +197,7 @@ exports.seed = function(knex, Promise) {
           },
             {
             id: 11,
-            name: "Steph Curry",
+            name: "Stephen Curry",
             position: 'SG',
             ppg: 22.7,
             apg: 6.8,

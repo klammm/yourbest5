@@ -12,6 +12,11 @@ NBA Fantasy basketball application that includes an interactive dashboard.
 4. `knex seed:run`
 
 
+#### Things to note:
+
+- Shaq video highlights are not working.
+- Some updates will mess with some posts. There might be a bug somewhere from making many commands to post, put, get, delete. 
+
 ## Swagger generated server
 
 ##### Overview

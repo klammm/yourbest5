@@ -11,6 +11,7 @@ module.exports = {
   addPlayerUserRoster: addPlayerUserRoster,
   updatePlayer: updatePlayer,
   score: score,
+  createTeam: createTeam,
 }
 
 function findAllUsers(req, res, next) {
@@ -47,8 +48,6 @@ function findUser(req, res, next) {
 }
 
 function findUserTeam(req, res, next) {
-  // grab the user from {userid} -> grab the team_id -> form the JSON object with the player_id matching the team_id
-  // -> placing each player_id into their respective positions PG: player_id.position,
   knex('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
@@ -79,10 +78,42 @@ function findUserTeam(req, res, next) {
   })
 }
 
-function deleteTeam(req, res) {
-  // knex delete
+function createTeam(req, res, next) {
+  knex('users').where({'id': req.swagger.params.userid.value, 'team_id': null})
+  .then((result) => {
+    let team = {name: req.body};
+    return knex('teams').insert(team, '*');
+  })
+  .then((responseTeam) => {
+    res.send(responseTeam[0])
+  })
+  .catch((err) => {
+    next(err);
+  })
+}
 
-  // response
+function deleteTeam(req, res, next) {
+  knex('users').where('id', req.swagger.params.userid.value)
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('teams').where('id', teamId);
+  })
+  .then((team) => {
+    let result = {
+      id: Number(team[0].id),
+      name: team[0].name.toString()
+    }
+    res.send(result)
+    return knex('teams').where('id', team[0].id).del();
+  })
+  .catch( (err) => {
+    next(err);
+  })
+}
+
+function addPlayerUserRoster(req, res, next) {
+  let teamResult;
+  let playerToBeReplaced;
   knex('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
@@ -98,10 +129,20 @@ function deleteTeam(req, res) {
     return Promise.all(promiseArray)
   })
   .then((knexArray) => {
-    let teamResult = {"PG": 'blank', "SG": 'blank', 'SF': 'blank', 'PF': 'blank', "C": 'blank'};
+    teamResult = {"PG": 'blank', "SG": 'blank', 'SF': 'blank', 'PF': 'blank', "C": 'blank'};
     knexArray.forEach((player) => {
       teamResult[player[0].position] = player[0]
     })
+    let query = req.query.position
+    playerToBeReplaced = teamResult[query].id;
+    return knex('users').where('id', req.swagger.params.userid.value);
+  })
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('players_teams').where({'team_id': teamId, 'player_id': playerToBeReplaced}).update('player_id', req.body.id);
+  })
+  .then((team) => {
+    teamResult[req.query.position] = req.body
     res.send(teamResult)
   })
   .catch( (err) => {
@@ -109,14 +150,25 @@ function deleteTeam(req, res) {
   })
 }
 
-function addPlayerUserRoster(req, res) {
-
+function updatePlayer(req, res, next) {
+  knex('users').where('id', req.swagger.params.userid.value)
+  .then((result) => {
+    let teamId = result[0].team_id;
+    return knex('players_teams').where({'team_id': teamId, 'player_id': req.query.currentPlayerID}).update('player_id', req.body);
+  })
+  .then(() => {
+    return knex('players').where('id', req.body);
+  })
+  .then((result) => {
+    res.send(result[0])
+  })
+  .catch( (err) => {
+    next(err);
+  })
 }
 
-function updatePlayer(req, res) {
 
-}
-
+// product of General Deep
 function score(req, res, next) {
   knex('players_teams').where('id', req.swagger.params.userid.value)
   .then((result) => {
@@ -155,13 +207,11 @@ function score(req, res, next) {
       };
        scoreArr.push(scoreArrObj)
       })
-      return scoreArr;
+          // return Promise.all(scoreArrObj)
     })
-    return Promise.all(scoreArr)
-    // return scoreArr
+    return scoreArr
   })
     .then((scoreArr) => {
-      // console.log(scoreArr[2]);
       let totals = [];
       // console.log(scoreArr);
       let teamTotals = {
@@ -176,7 +226,6 @@ function score(req, res, next) {
       }
 
     scoreArr.forEach((stats) => {
-      // console.log('stats are ', stats.twopp);
       teamTotals.twopp += stats.twopp,
       teamTotals.twoapg += stats.twoapg,
       teamTotals.threepp += stats.threepp,
@@ -189,13 +238,12 @@ function score(req, res, next) {
     return teamTotals
 
     })
-    // .then((val) => {
-    //   console.log('val are', val);
-    //   // res.send(val)
-    // })
+    .then((val) => {
+      console.log(val);
+      // res.send(val)
+    })
 
   .catch((err) => {
-    // next(err);
-    console.error();(err);
+    next(err);
   })
 }
