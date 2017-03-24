@@ -34,5 +34,7 @@ exports.seed = function(knex, Promise) {
           name: "Waldo",
         }
       ]);
-    });
+    }).then( () => {
+          return knex.raw("SELECT setval('teams_id_seq', (SELECT MAX(id) FROM teams));")
+        });
 };
