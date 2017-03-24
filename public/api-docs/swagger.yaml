@@ -3,7 +3,7 @@ info:
   version: "0.0.1"
   title: YourBest5(+weather)
 # during dev, should point to your local machine
-host: https://yourbest5.herokuapp.com
+host: yourbest5.herokuapp.com
 # basePath prefixes all resource paths
 basePath: /
 #
