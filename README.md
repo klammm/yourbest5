@@ -54,7 +54,7 @@ npm start
 ### API Endpoints:
 
 ```
-open https://yourbest5.herokuapp.com/dist/swagger.yaml
+open https://yourbest5.herokuapp.com/api-docs/
 ```
 
 
