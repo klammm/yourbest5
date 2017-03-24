@@ -25,17 +25,37 @@ function allPlayers(req, res, next) {
 }
 
 function addPlayerNbaDB(req, res, next) {
-  if (checkDBForPlayer(req.swagger.body)) {
-    // prompt the user that the player exists already
-  } else {
-    knex('players').insert()
-
-  }
-}
-
-// helper function for addPlayerNbaDB
-function checkDBForPlayer(player) {
-  // check if the DB has this player
+  knex('players').where('name', req.body.name)
+  .then((result) => {
+    if (result.length > 1) {
+      res.send({Message: "Player already exists. Thank you for your thought and contribution."})
+    } else {
+      return knex('players').insert({
+        "name": req.body.name,
+        "position": req.body.position,
+        "ppg": req.body.ppg,
+        "apg": req.body.apg,
+        "rpg": req.body.rpg,
+        "orpg": req.body.orpg,
+        "bpg": req.body.bpg,
+        "spg": req.body.spg,
+        "tpg": req.body.tpg,
+        "fgp": req.body.fgp,
+        "twopp": req.body.twopp,
+        "threepp": req.body.threepp,
+        "ftp": req.body.ftp,
+      })
+    }
+  })
+  .then(() => {
+    return knex('players')
+  })
+  .then((allPlayers) => {
+    res.send(allPlayers[allPlayers.length - 1])
+  })
+  .catch((err) => {
+    next(err);
+  })
 }
 
 function onePlayer(req, res, next) {

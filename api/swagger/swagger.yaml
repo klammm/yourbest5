@@ -394,9 +394,6 @@ definitions:
     type: integer
     format: int64
   postPlayerResponse:
-    required:
-      - name
-      - position
     type: object
     properties:
       name:
