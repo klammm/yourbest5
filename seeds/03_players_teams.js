@@ -1,9 +1,7 @@
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
   return knex('players_teams').del()
     .then(function () {
-      // Inserts seed entries
       return knex('players_teams').insert([
         {
           id: 1,
