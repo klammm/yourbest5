@@ -167,27 +167,98 @@ function updatePlayer(req, res, next) {
   })
 }
 
+
 // product of General Deep
-function score(req, res) {
-  knex('scores')
+function score(req, res, next) {
+  knex('players_teams').where('id', req.swagger.params.userid.value)
+  .then((result) => {
+    console.log('result is ', result);
+    let teamId = result[0].team_id;
+    if (teamId) {
+      return knex('players_teams').where('team_id', teamId);
+    } else {
+      res.send({message: "No Team Available"}).status(404);
+    }
+  })
+  .then((team) => {
+    let teamArray = team.map((player) => {
+      return player.player_id
+    })
+    let promiseArray = teamArray.map((player) => {
+      return knex('players').where('id', player)
+    })
+    return Promise.all(promiseArray)
+  })
   .then((usersArray) => {
-    // console.log(usersArray);
+    console.log('usersArray is, ', usersArray.length);
     const scoreArr = [];
     usersArray.forEach((player) => {
+      player.filter((item) => {
+        // console.log('item is!!! ' ,item);
       let scoreArrObj = {
-        id: player.id,
-        // name: player.first_name,
-        score: player.score
+        id: item.id,
+        name: item.name,
+        twopp: item.twopp,
+        twoapg: item.twoapg,
+        threepp: item.threepp,
+        threeapg: item.threeapg,
+        orpg: item.orpg,
+        tpg: item.tpg,
+        ftp: item.ftp,
+        ftapg: item.ftapg
       };
-      scoreArr.push(scoreArrObj)
+       scoreArr.push(scoreArrObj)
+      })
+          // return Promise.all(scoreArrObj)
     })
-    // res.send(scoreArr)
-    return Promise.all(scoreArr)
+    return scoreArr
   })
-  .then((score) => {
-    console.log(score);
-    res.send(score)
-  })
+    .then((scoreArr) => {
+      let totals = [];
+      // console.log(scoreArr);
+      let teamTotals = {
+        twopp : 0,
+        twoapg : 0,
+        threepp : 0,
+        threeapg : 0,
+        orpg : 0,
+        tpg : 0,
+        ftp : 0,
+        ftapg : 0
+      }
+
+    scoreArr.forEach((stats) => {
+      teamTotals.twopp += stats.twopp,
+      teamTotals.twoapg += stats.twoapg,
+      teamTotals.threepp += stats.threepp,
+      teamTotals.threeapg += stats.threeapg,
+      teamTotals.orpg += stats.orpg,
+      teamTotals.tpg += stats.tpg,
+      teamTotals.ftp += stats.ftp,
+      teamTotals.ftapg += stats.ftapg
+    })
+    return teamTotals
+
+    })
+    .then((val) => {
+
+      let teamTPG = val.tpg * 0.5 //weighing t/o by half, decrease FGA by this #
+      let teamORPG = val.orpg * 0.5; //weighing orpg by half, increase FGA by this #
+      let team2PP = val.twopp/5;
+      let team2APG = val.twoapg - teamTPG + teamORPG;
+      let team3PP = val.threepp/5;
+      let team3APG = val.threeapg;
+      let teamFTP = val.ftp/5;
+      let teamtFTM = val.ftapg * teamFTP;
+
+      let score = teamtFTM+team2APG+team3APG
+      console.log(score);
+      let team = {
+        score: score
+      };
+      res.send(team)
+    })
+
   .catch((err) => {
     next(err);
   })

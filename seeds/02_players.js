@@ -18,8 +18,11 @@ exports.seed = function(knex, Promise) {
             tpg: 2.7,
             fgp: .497,
             twopp: .51,
+            twoapg: 22.2,
             threepp:.327,
+            threeapg: 1.7,
             ftp: .835,
+            ftapg: 8.2
           },
           {
             id: 2,
@@ -34,8 +37,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.9,
             fgp: .520,
             twopp: .54,
+            twoapg: 12,
             threepp:.303,
             ftp: .848,
+            threeapg: 1.2,
+            ftapg: 6.5
           },
           {
             id: 3,
@@ -50,8 +56,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.1,
             fgp: .496,
             twopp: .509,
+            twoapg: 17.4,
             threepp:.376,
+            threeapg: 1.9,
             ftp: .886,
+            ftapg: 5.0
           },
           {
             id: 4,
@@ -66,8 +75,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.0,
             fgp: .447,
             twopp: .479,
+            twoapg: 15.3,
             threepp:.329,
+            threeapg: 4.1,
             ftp: .837,
+            ftapg: 7.4
           },
           {
             id: 5,
@@ -82,8 +94,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.0,
             fgp: .512,
             twopp: .514,
+            twoapg: 16.9,
             threepp:.202,
+            threeapg: .1,
             ftp: .712,
+            ftapg: 6.2
           },
           {
             id: 6,
@@ -98,8 +113,11 @@ exports.seed = function(knex, Promise) {
             tpg: 2.7,
             fgp: .582,
             twopp: .583,
+            twoapg: 16.1,
             threepp: .045,
+            threeapg: 0,
             ftp: .527,
+            ftapg: 9.3
           },
           {
             id: 7,
@@ -114,8 +132,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.4,
             fgp: .500,
             twopp: .541,
+            twoapg: 15.6,
             threepp: .343,
+            threeapg: 2,
             ftp: .740,
+            ftapg: 8.2
           },
           {
             id: 8,
@@ -130,8 +151,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.6,
             ftp: .780,
             twopp: .448,
+            twoapg: 18.1,
             threepp: .313,
+            threeapg: 3.7,
             fgp: .425,
+            ftapg: 8.9
           },
           {
             id: 9,
@@ -146,8 +170,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.1,
             fgp: .541,
             twopp: .581,
+            twoapg: 12.7,
             threepp: .266,
+            threeapg: 1.9,
             ftp: .735,
+            ftapg: 8.1
           },
           {
             id: 10,
@@ -162,8 +189,11 @@ exports.seed = function(knex, Promise) {
             tpg: 2.4,
             fgp: .506,
             twopp: .507,
+            twoapg: 14.5,
             threepp: .179,
+            threeapg: 1.9,
             ftp: .696,
+            ftapg: 6.1
           },
             {
             id: 11,
@@ -178,8 +208,11 @@ exports.seed = function(knex, Promise) {
             tpg: 3.2,
             fgp: .475,
             twopp: .507,
+            twoapg: 9.2,
             threepp: .437,
+            threeapg: 7.6,
             ftp: .904,
+            ftapg: 3.8
           }
         ])
       ]);
