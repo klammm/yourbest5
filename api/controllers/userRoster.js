@@ -172,7 +172,7 @@ function updatePlayer(req, res, next) {
 function score(req, res, next) {
   knex('players_teams').where('id', req.swagger.params.userid.value)
   .then((result) => {
-    let teamId = result[0].team_id;
+    let teamId = result[0].id;
     if (teamId) {
       return knex('players_teams').where('team_id', teamId);
     } else {
