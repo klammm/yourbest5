@@ -25,6 +25,8 @@
     "supertest": "^1.0.0"
   },
   "scripts": {
+    "heroku-postbuild": "knex migrate:latest",
+    "knex": "knex",
     "start": "node app.js",
     "test": "node_modules/mocha/bin/mocha"
   }
