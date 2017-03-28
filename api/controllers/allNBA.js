@@ -11,6 +11,7 @@ module.exports = {
   statRankings: statRankings,
   playerPositionRankings: playerPositionRankings,
   playerHighlights: playerHighlights,
+  mostPickedPlayerRankings: mostPickedPlayerRankings,
 }
 
 
@@ -78,6 +79,48 @@ function statRankings(req, res, next) {
   })
 }
 
+function mostPickedPlayerRankings(req, res, next) {
+  const occurences = {};
+  knex('players_teams').orderBy('player_id', 'asc').select('player_id')
+  .then((arrayOfPlayersPicked) => {
+    const nonDuplicatePlayersPickedArray = [];
+
+    arrayOfPlayersPicked.map((playerId) => {
+      if (occurences[playerId.player_id] === undefined) {
+        occurences[playerId.player_id] = 1
+      } else {
+        occurences[playerId.player_id]++
+      }
+    })
+    for(var playerIdNumber in occurences) {
+      nonDuplicatePlayersPickedArray.push(playerIdNumber)
+    };
+    let promiseArray = nonDuplicatePlayersPickedArray.map((playerId) => {
+      return knex('players').where('id', playerId)
+    })
+    return Promise.all(promiseArray)
+  })
+  .then((knexArray) => {
+    let resultArray = [];
+    knexArray.forEach((extraArrayLayer) => {
+      extraArrayLayer.forEach((player) => {
+        const resultObj = {};
+        resultObj['name'] = player.name
+        resultObj['player_id'] = player.id
+        resultObj['picked'] = occurences[player.id]
+        resultArray.push(resultObj)
+      })
+    })
+    resultArray.sort((a, b) => {
+      return b.picked - a.picked
+    })
+    res.send(resultArray)
+  })
+  .catch((err) => {
+    next(err);
+  })
+}
+
 function playerPositionRankings(req, res, next) {
 
 }
@@ -89,7 +132,6 @@ function playerHighlights(req, res, next) {
   .then((result) => {
     player = result[0].name;
     player = player.split(' ').join('+')
-    // console.log(player)
     return fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${player}` + `+highlights&type=video&key=${apiKey}`)
   })
   .then((fetchResult) => {
@@ -111,7 +153,8 @@ function playerHighlights(req, res, next) {
 
 // helper function for playerHighlights
 function youtubeTitleCleaner(string, stringComparison) {
-  // Example input: Michael Jordan's Top 50 all time plays
+  // Example input for stringComparison: Michael Jordan's Top 50 all time plays
+  // Example input for string: Michael+Jordan, Shaquille+O'+Neal
   let stringsToCompare = string.split('+');
   let regexString = '';
   for (let i = 0; i < stringsToCompare.length; i++) {

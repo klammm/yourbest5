@@ -7,9 +7,6 @@ const app = require('../app');
 const request = require('supertest');
 const knex = require('../knex');
 
-
-
-
 suite('nba DB test', () => {
   before((done) => {
     knex.migrate.latest()
@@ -30,19 +27,6 @@ suite('nba DB test', () => {
         done(err);
       });
   });
-  // beforeEach((done) => {
-  //   knex.migrate.rollback()
-  //   .then(() => {
-  //     return knex.migrate.latest();
-  //   })
-  //   .then(() => {
-  //     knex.seed.run();
-  //     done();
-  //   })
-  //   .catch((err) => {
-  //       done(err);
-  //     });
-  // });
   test('GET /nba', (done) => {
     request(app)
       .get('/nba')
@@ -503,27 +487,3 @@ suite('nba DB test', () => {
     ], done)
   })
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//

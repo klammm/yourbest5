@@ -1,11 +1,17 @@
 'use strict';
 
 var SwaggerExpress = require('swagger-express-mw');
-var app = require('express')();
+const express = require('express');
+const app = express();
+const cors = require('cors');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
+
+const path = require('path');
+app.use(express.static(path.join('public')));
+app.use(cors());
 
 var config = {
   appRoot: __dirname // required config
