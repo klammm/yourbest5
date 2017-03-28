@@ -236,7 +236,6 @@ function score(req, res, next) {
 
     })
     .then((val) => {
-
       let teamTPG = val.tpg * 0.5 //weighing t/o by half, decrease FGA by this #
       let teamORPG = val.orpg * 0.5; //weighing orpg by half, increase FGA by this #
       let team2PP = val.twopp/5;
