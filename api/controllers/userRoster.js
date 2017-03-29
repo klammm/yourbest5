@@ -98,7 +98,6 @@ function createTeam(req, res, next) {
       insertObj['player_id'] = player
       return insertObj
     });
-    console.log(insertArray)
     return knex('players_teams').insert(insertArray);
   })
   .then(() => {
