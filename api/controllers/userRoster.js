@@ -172,7 +172,7 @@ function updatePlayer(req, res, next) {
 function score(req, res, next) {
   knex('players_teams').where('id', req.swagger.params.userid.value)
   .then((result) => {
-    let teamId = result[0].team_id;
+    let teamId = result[0].id;
     if (teamId) {
       return knex('players_teams').where('team_id', teamId);
     } else {
@@ -236,7 +236,6 @@ function score(req, res, next) {
 
     })
     .then((val) => {
-
       let teamTPG = val.tpg * 0.5 //weighing t/o by half, decrease FGA by this #
       let teamORPG = val.orpg * 0.5; //weighing orpg by half, increase FGA by this #
       let team2PP = val.twopp/5;
