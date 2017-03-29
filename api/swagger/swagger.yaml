@@ -181,9 +181,9 @@ paths:
           required: true
           type: integer
           format: int64
-        - name: currentPlayerID
+        - name: id
           in: query
-          description: The position seeking to be placed into
+          description: The player id being replaced
           required: true
           type: integer
           format: int64

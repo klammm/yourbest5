@@ -185,7 +185,7 @@ function updatePlayer(req, res, next) {
   knex('users').where('id', req.swagger.params.userid.value)
   .then((result) => {
     let teamId = result[0].team_id;
-    return knex('players_teams').where({'team_id': teamId, 'player_id': req.query.currentPlayerID}).update('player_id', req.body);
+    return knex('players_teams').where({'team_id': teamId, 'player_id': req.query.id}).update('player_id', req.body);
   })
   .then(() => {
     return knex('players').where('id', req.body);
