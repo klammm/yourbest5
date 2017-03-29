@@ -79,13 +79,45 @@ function findUserTeam(req, res, next) {
 }
 
 function createTeam(req, res, next) {
+  let teamName;
+  let teamId;
+  let arrayOfPlayerIds = [req.body.PG, req.body.SG, req.body.SF, req.body.PF, req.body.C];
   knex('users').where({'id': req.swagger.params.userid.value, 'team_id': null})
   .then((result) => {
-    let team = {name: req.body};
-    return knex('teams').insert(team, '*');
+    teamName = req.query.name
+    return knex('teams').insert({"name": teamName}, '*');
   })
-  .then((responseTeam) => {
-    res.send(responseTeam[0])
+  .then((insertResponse) => {
+    teamId = insertResponse[0].id
+    return knex('users').where({'id': req.swagger.params.userid.value}).update("team_id", insertResponse[0].id)
+  })
+  .then(() => {
+    let insertArray = arrayOfPlayerIds.map((player) => {
+      let insertObj = {};
+      insertObj['team_id'] = teamId
+      insertObj['player_id'] = player
+      return insertObj
+    });
+    console.log(insertArray)
+    return knex('players_teams').insert(insertArray);
+  })
+  .then(() => {
+    let promiseArray = arrayOfPlayerIds.map((id) => {
+      return knex('players').where('id', id)
+    })
+
+    return Promise.all(promiseArray)
+  })
+  .then((knexArray) => {
+    let teamResult = {"PG": 'blank', "SG": 'blank', 'SF': 'blank', 'PF': 'blank', "C": 'blank'};
+    knexArray.forEach((player) => {
+      teamResult[player[0].position] = player[0]
+    })
+    let responseObj = {
+      team_name: teamName,
+      team: teamResult
+    };
+    res.send(responseObj)
   })
   .catch((err) => {
     next(err);

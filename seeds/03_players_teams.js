@@ -79,5 +79,7 @@ exports.seed = function(knex, Promise) {
           team_id: 3,
         }
       ]);
-    });
+    }).then( () => {
+          return knex.raw("SELECT setval('players_teams_id_seq', (SELECT MAX(id) FROM players_teams));")
+        })
 };
