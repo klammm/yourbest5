@@ -106,7 +106,7 @@ paths:
           description: the entire new team being created
           required: true
           schema:
-            $ref: '#/definitions/teamResponse'
+            $ref: '#/definitions/createTeamBodyParameter'
       responses:
         200:
           description: Returns a JSON object of the user's newly created team
@@ -181,9 +181,9 @@ paths:
           required: true
           type: integer
           format: int64
-        - name: currentPlayerID
+        - name: id
           in: query
-          description: The position seeking to be placed into
+          description: The player id being replaced
           required: true
           type: integer
           format: int64
@@ -425,6 +425,24 @@ definitions:
   updatePlayerResponse:
     type: integer
     format: int64
+  createTeamBodyParameter:
+    type: object
+    properties:
+      PG:
+        type: integer
+        format: int64
+      SG:
+        type: integer
+        format: int64
+      SF:
+        type: integer
+        format: int64
+      PF:
+        type: integer
+        format: int64
+      C:
+        type: integer
+        format: int64
   postPlayerResponse:
     type: object
     properties:
