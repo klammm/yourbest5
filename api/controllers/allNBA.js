@@ -47,7 +47,9 @@ function addPlayerNbaDB(req, res, next) {
         "threeapg": req.body.threeapg,
         "ftapg": req.body.ftapg,
         "threepp": req.body.threepp,
+        "threeapg": req.body.threeapg,
         "ftp": req.body.ftp,
+        "ftapg": req.body.ftapg,
       })
     }
   })
