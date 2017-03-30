@@ -27,9 +27,9 @@ suite('users test', () => {
         done(err);
       });
   });
-  test('GET /users', (done) => {
+  test('GET /api/users', (done) => {
     request(app)
-      .get('/users')
+      .get('/api/users')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, [{
@@ -43,9 +43,9 @@ suite('users test', () => {
       }], done)
   });
 
-  test('GET /users/:userid', (done) => {
+  test('GET /api/users/:userid', (done) => {
     request(app)
-    .get('/users/1')
+    .get('/api/users/1')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
     .expect(200, {

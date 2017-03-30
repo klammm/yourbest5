@@ -27,9 +27,9 @@ suite('nba DB test', () => {
         done(err);
       });
   });
-  test('GET /nba', (done) => {
+  test('GET /api/nba', (done) => {
     request(app)
-      .get('/nba')
+      .get('/api/nba')
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, [
