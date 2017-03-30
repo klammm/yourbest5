@@ -44,6 +44,8 @@ function addPlayerNbaDB(req, res, next) {
         "fgp": req.body.fgp,
         "twopp": req.body.twopp,
         "twoapg": req.body.twoapg,
+        "threeapg": req.body.threeapg,
+        "ftapg": req.body.ftapg,
         "threepp": req.body.threepp,
         "threeapg": req.body.threeapg,
         "ftp": req.body.ftp,

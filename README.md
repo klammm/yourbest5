@@ -78,5 +78,5 @@ open https://yourbest5.herokuapp.com/api-docs/
 ___
 
 ##### Contributors:
-  - Kevin Lam
-  - Gurdip Singh
+  - Kevin Lam([@smoymcbear](https://github.com/smokymcbear))
+  - Gurdip Singh([@GeneralDeep](https://github.com/Generaldeep))
