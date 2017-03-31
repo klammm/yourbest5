@@ -234,7 +234,7 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: personNam
+        - name: personName
           description: adding a user
           in: body
           required: true 
@@ -384,7 +384,7 @@ paths:
         - application/json
       parameters:
         - in: body 
-          name: "username and password"
+          name: "email and password"
           required: true 
           schema:
             $ref: "#/definitions/signin"
