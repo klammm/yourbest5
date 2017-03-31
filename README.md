@@ -1,10 +1,6 @@
 # YourBest5(+highlights)
 
-<<<<<<< HEAD
-_**Version 1.0.0**_
-=======
 _**Version 0.0.1 ALPHA**_
->>>>>>> a8791ded6af2cf82afde1acab829f35dc349ddec
 
 _3/24/2017_
 
@@ -58,11 +54,7 @@ npm start
 ### API Endpoints:
 
 ```
-<<<<<<< HEAD
-open https://yourbest5.herokuapp.com/dist/swagger.yaml
-=======
 open https://yourbest5.herokuapp.com/api-docs/
->>>>>>> a8791ded6af2cf82afde1acab829f35dc349ddec
 ```
 
 
