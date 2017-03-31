@@ -226,15 +226,30 @@ paths:
             schema:
               $ref: '#/definitions/ErrorResponse'
       
-  # /api/addUser: 
-  #   x-swagger-router-controller: userRoster
-  #   post:
-  #     description: add new user
-  #     operationId: addUser
-  #     produces:
-  #       - application/json
-  #     parameters:
-  #       - name:
+  /api/signup: 
+    x-swagger-router-controller: userRoster
+    post:
+      description: add new user
+      operationId: signUp
+      produces:
+        - application/json
+      parameters:
+        - name: personNam
+          description: adding a user
+          in: body
+          required: true 
+          schema:
+            $ref: "#/definitions/AddUser"
+      responses:
+        "200":
+          description: sucess
+          schema:
+            $ref: "#/definitions/PostUsersResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        
   
   /api/nba:
     x-swagger-router-controller: allNBA
@@ -442,6 +457,39 @@ definitions:
       last_name:
         type: string
       token:
+        type: string
+  AddUser:
+    type: object
+    required:
+      - password
+      - first_name
+      - last_name
+      - email
+    properties:
+      password:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+        
+  PostUsersResponse:
+    type: object
+    required:
+      - id
+      - first_name
+      - last_name
+      - email
+    properties:
+      id:
+        type: integer
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
         type: string
 
   ErrorResponse:
