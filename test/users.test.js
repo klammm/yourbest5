@@ -40,6 +40,11 @@ suite('users test', () => {
         'id': 2,
         'first_name': 'KayDaddy',
         'last_name': 'Zheng',
+      },
+      {
+        'id': 3,
+        'first_name': 'Thrill',
+        'last_name': 'Clinton',
       }], done)
   });
 

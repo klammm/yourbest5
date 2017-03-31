@@ -12,6 +12,7 @@ module.exports = {
   updatePlayer: updatePlayer,
   score: score,
   createTeam: createTeam,
+  signUp: signUp
 }
 
 function findAllUsers(req, res, next) {
@@ -286,4 +287,8 @@ function score(req, res, next) {
   .catch((err) => {
     next(err);
   })
+}
+
+function signUp(req, res, next) {
+
 }

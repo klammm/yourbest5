@@ -225,6 +225,32 @@ paths:
             description: unexpected error
             schema:
               $ref: '#/definitions/ErrorResponse'
+      
+  /api/signup: 
+    x-swagger-router-controller: userRoster
+    post:
+      description: add new user
+      operationId: signUp
+      produces:
+        - application/json
+      parameters:
+        - name: personNam
+          description: adding a user
+          in: body
+          required: true 
+          schema:
+            $ref: "#/definitions/AddUser"
+      responses:
+        "200":
+          description: sucess
+          schema:
+            $ref: "#/definitions/PostUsersResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        
+  
   /api/nba:
     x-swagger-router-controller: allNBA
     get:
@@ -348,6 +374,33 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
+            
+  /api/login:
+    x-swagger-router-controller: login
+    post:
+      description: User Login
+      operationId: userLogin
+      produces:
+        - application/json
+      parameters:
+        - in: body 
+          name: "username and password"
+          required: true 
+          schema:
+            $ref: "#/definitions/signin"
+            
+      responses:
+        "200": 
+          description: Success
+          schema:
+            $ref: "#/definitions/loggedIn"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      
+            
+            
   # /api/nba/rankings/positions/{position}:
   #   x-swagger-router-controller: allNBA
   #   get:
@@ -376,6 +429,69 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  signin:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+        
+  loggedIn:
+    required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - token
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      token:
+        type: string
+  AddUser:
+    type: object
+    required:
+      - password
+      - first_name
+      - last_name
+      - email
+    properties:
+      password:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+        
+  PostUsersResponse:
+    type: object
+    required:
+      - id
+      - first_name
+      - last_name
+      - email
+    properties:
+      id:
+        type: integer
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+
   ErrorResponse:
     required:
       - message
@@ -1050,3 +1166,5 @@ definitions:
               ftapg:
                 type: number
                 format: float
+                
+      
