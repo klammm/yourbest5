@@ -348,6 +348,33 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
+            
+  /api/login:
+    x-swagger-router-controller: login
+    post:
+      description: User Login
+      operationId: userLogin
+      produces:
+        - application/json
+      parameters:
+        - in: body 
+          name: "username and password"
+          required: true 
+          schema:
+            $ref: "#/definitions/signin"
+            
+      responses:
+        "200": 
+          description: Success
+          schema:
+            $ref: "#/definitions/loggedIn"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      
+            
+            
   # /api/nba/rankings/positions/{position}:
   #   x-swagger-router-controller: allNBA
   #   get:
@@ -376,6 +403,36 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  signin:
+    type: object
+    required:
+      - username
+      - password
+    properties:
+      username:
+        type: string
+      password:
+        type: string
+        
+  loggedIn:
+    required:
+      - id
+      - user_name
+      - first_name
+      - last_name
+      - token
+    properties:
+      id:
+        type: integer
+      user_name:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      token:
+        type: string
+
   ErrorResponse:
     required:
       - message
@@ -1050,3 +1107,5 @@ definitions:
               ftapg:
                 type: number
                 format: float
+                
+      

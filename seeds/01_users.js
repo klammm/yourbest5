@@ -19,6 +19,16 @@ const data = [{
   team_id: 2,
   created_at: new Date('2016-06-29 14:26:16 UTC'),
   updated_at: new Date('2016-06-29 14:26:16 UTC')
+},
+{
+  id: 3,
+  first_name: 'Thrill',
+  last_name: 'Clinton',
+  email: 'Thrill4Life@gmail.com',
+  hashed_password: '$2a$12$vnPy7I2Yy3AhUoLnsIHpneK9rBygQDwfQa4Ysbcq3MbQ66O4qMgku', //thriller
+  team_id: 3,
+  created_at: new Date('2016-06-29 14:26:16 UTC'),
+  updated_at: new Date('2016-06-29 14:26:16 UTC')
     }
   ];
 
