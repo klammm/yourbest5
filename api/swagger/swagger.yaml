@@ -225,6 +225,17 @@ paths:
             description: unexpected error
             schema:
               $ref: '#/definitions/ErrorResponse'
+      
+  # /api/addUser: 
+  #   x-swagger-router-controller: userRoster
+  #   post:
+  #     description: add new user
+  #     operationId: addUser
+  #     produces:
+  #       - application/json
+  #     parameters:
+  #       - name:
+  
   /api/nba:
     x-swagger-router-controller: allNBA
     get:
@@ -406,10 +417,10 @@ definitions:
   signin:
     type: object
     required:
-      - username
+      - email
       - password
     properties:
-      username:
+      email:
         type: string
       password:
         type: string
@@ -417,14 +428,14 @@ definitions:
   loggedIn:
     required:
       - id
-      - user_name
+      - email
       - first_name
       - last_name
       - token
     properties:
       id:
         type: integer
-      user_name:
+      email:
         type: string
       first_name:
         type: string
