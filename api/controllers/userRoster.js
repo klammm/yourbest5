@@ -2,6 +2,7 @@
 
 var util = require('util');
 const knex = require('../../knex');
+const bcrypt = require('bcrypt-as-promised');
 
 module.exports = {
   findAllUsers: findAllUsers,
@@ -290,5 +291,41 @@ function score(req, res, next) {
 }
 
 function signUp(req, res, next) {
-
-}
+      knex('users')
+      .then((users) => {
+        console.log('users are ........', users);
+        const user = {};
+        Object.keys(req.body).forEach((key) => {
+          user[key] = req.body[key];
+        });
+        if (Object.keys(user).some(field => field === "") || !user.email || !user.password) {
+          res.status(400).send("must not be Blank");
+        }
+        if (user.password.length < 8) {
+          res.status(400).send("must be at least 8 characters long");
+        }
+        knex("users")
+          .where("email", user.email)
+          .then((users) => {
+            if (users[0]) {
+              res.status(400).send("already exists");
+            }
+            bcrypt.hash(user.password, 12)
+              .then((hashed_password) => {
+                delete user.password;
+                user.hashed_password = hashed_password;
+                return knex("users")
+                  .insert((user), '*')
+              })
+              .then((users) => {
+                delete users[0].hashed_password;
+                res.send(users[0]);
+              })
+              .catch((err) => {
+                if (err) {
+                  next(err);
+                }
+              });
+          })
+      })
+    }
