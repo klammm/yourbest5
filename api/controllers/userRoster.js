@@ -293,7 +293,7 @@ function score(req, res, next) {
 function signUp(req, res, next) {
       knex('users')
       .then((users) => {
-        console.log('users are ........', users);
+        // console.log('users are ........', users);
         const user = {};
         Object.keys(req.body).forEach((key) => {
           user[key] = req.body[key];
