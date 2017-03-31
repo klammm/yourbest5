@@ -3,7 +3,7 @@ info:
   version: "0.0.1"
   title: YourBest5(+weather)
 # during dev, should point to your local machine
-host: localhost:10010
+host: yourbest5.herokuapp.com
 # basePath prefixes all resource paths
 basePath: /
 #
@@ -225,8 +225,8 @@ paths:
             description: unexpected error
             schema:
               $ref: '#/definitions/ErrorResponse'
-      
-  /api/signup: 
+
+  /api/signup:
     x-swagger-router-controller: userRoster
     post:
       description: add new user
@@ -237,7 +237,7 @@ paths:
         - name: personName
           description: adding a user
           in: body
-          required: true 
+          required: true
           schema:
             $ref: "#/definitions/AddUser"
       responses:
@@ -249,8 +249,8 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-        
-  
+
+
   /api/nba:
     x-swagger-router-controller: allNBA
     get:
@@ -374,7 +374,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-            
+
   /api/login:
     x-swagger-router-controller: login
     post:
@@ -383,14 +383,14 @@ paths:
       produces:
         - application/json
       parameters:
-        - in: body 
+        - in: body
           name: "email and password"
-          required: true 
+          required: true
           schema:
             $ref: "#/definitions/signin"
-            
+
       responses:
-        "200": 
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/loggedIn"
@@ -398,9 +398,9 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-      
-            
-            
+
+
+
   # /api/nba/rankings/positions/{position}:
   #   x-swagger-router-controller: allNBA
   #   get:
@@ -439,7 +439,7 @@ definitions:
         type: string
       password:
         type: string
-        
+
   loggedIn:
     required:
       - id
@@ -474,7 +474,7 @@ definitions:
         type: string
       email:
         type: string
-        
+
   PostUsersResponse:
     type: object
     required:
@@ -1166,5 +1166,3 @@ definitions:
               ftapg:
                 type: number
                 format: float
-                
-      
