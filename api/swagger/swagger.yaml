@@ -20,7 +20,7 @@ produces:
 paths:
   # USER ROSTER
 
-  /api/users:
+  /users:
     x-swagger-router-controller: userRoster
     get:
       description: Returns all the users in our database
@@ -38,7 +38,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}:
+  /users/{userid}:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the specific user's info
@@ -61,7 +61,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}/team:
+  /users/{userid}/team:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the user's team
@@ -135,7 +135,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}/team/player:
+  /users/{userid}/team/player:
     x-swagger-router-controller: userRoster
     # post:
     #   description: Add one player to the team
@@ -202,7 +202,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}/team/score:
+  /users/{userid}/team/score:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the team's +/- score
@@ -226,7 +226,7 @@ paths:
             schema:
               $ref: '#/definitions/ErrorResponse'
 
-  /api/signup:
+  /signup:
     x-swagger-router-controller: userRoster
     post:
       description: add new user
@@ -251,7 +251,7 @@ paths:
             $ref: "#/definitions/ErrorResponse"
 
 
-  /api/nba:
+  /nba:
     x-swagger-router-controller: allNBA
     get:
       description: Returns all players from the database
@@ -290,7 +290,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/nba/{playerid}:
+  /nba/{playerid}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns a specific player from the database
@@ -313,7 +313,7 @@ paths:
           description: unexpected error
           schema:
               $ref: '#/definitions/ErrorResponse'
-  /api/nba/{playerid}/highlights:
+  /nba/{playerid}/highlights:
     x-swagger-router-controller: allNBA
     get:
       description: Returns a youtube url with highlights of the specific player
@@ -334,7 +334,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/nba/rankings/{stat}:
+  /nba/rankings/{stat}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for a certain stat
@@ -358,7 +358,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/nba/rankings/player:
+  /nba/rankings/player:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for most picked player
@@ -375,7 +375,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorResponse'
 
-  /api/login:
+  /login:
     x-swagger-router-controller: login
     post:
       description: User Login
@@ -401,7 +401,7 @@ paths:
 
 
 
-  # /api/nba/rankings/positions/{position}:
+  # /nba/rankings/positions/{position}:
   #   x-swagger-router-controller: allNBA
   #   get:
   #     description: Returns the rankings for a certain position

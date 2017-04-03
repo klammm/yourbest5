@@ -20,7 +20,7 @@ produces:
 paths:
   # USER ROSTER
 
-  /api/users:
+  /users:
     x-swagger-router-controller: userRoster
     get:
       description: Returns all the users in our database
@@ -38,7 +38,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}:
+  /users/{userid}:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the specific user's info
@@ -61,7 +61,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}/team:
+  /users/{userid}/team:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the user's team
@@ -96,17 +96,22 @@ paths:
           required: true
           type: integer
           format: int64
+        - name: name
+          in: query
+          description: The name of the new team being created
+          required: true
+          type: string
         - in: body
-          name: newPlayer
-          description: New player to be added to the team
+          name: team
+          description: the entire new team being created
           required: true
           schema:
-            $ref: '#/definitions/postRosterResponse'
+            $ref: '#/definitions/createTeamBodyParameter'
       responses:
         200:
           description: Returns a JSON object of the user's newly created team
           schema:
-            $ref: '#/definitions/teamResponse'
+            $ref: '#/definitions/postTeamResponse'
         default:
           description: unexpected error
           schema:
@@ -130,7 +135,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}/team/player:
+  /users/{userid}/team/player:
     x-swagger-router-controller: userRoster
     # post:
     #   description: Add one player to the team
@@ -176,9 +181,9 @@ paths:
           required: true
           type: integer
           format: int64
-        - name: currentPlayerID
+        - name: id
           in: query
-          description: The position seeking to be placed into
+          description: The player id being replaced
           required: true
           type: integer
           format: int64
@@ -197,7 +202,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/users/{userid}/team/score:
+  /users/{userid}/team/score:
     x-swagger-router-controller: userRoster
     get:
       description: Returns the team's +/- score
@@ -220,7 +225,33 @@ paths:
             description: unexpected error
             schema:
               $ref: '#/definitions/ErrorResponse'
-  /api/nba:
+
+  /signup:
+    x-swagger-router-controller: userRoster
+    post:
+      description: add new user
+      operationId: signUp
+      produces:
+        - application/json
+      parameters:
+        - name: personName
+          description: adding a user
+          in: body
+          required: true
+          schema:
+            $ref: "#/definitions/AddUser"
+      responses:
+        "200":
+          description: sucess
+          schema:
+            $ref: "#/definitions/PostUsersResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+  /nba:
     x-swagger-router-controller: allNBA
     get:
       description: Returns all players from the database
@@ -259,7 +290,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/nba/{playerid}:
+  /nba/{playerid}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns a specific player from the database
@@ -282,7 +313,7 @@ paths:
           description: unexpected error
           schema:
               $ref: '#/definitions/ErrorResponse'
-  /api/nba/{playerid}/highlights:
+  /nba/{playerid}/highlights:
     x-swagger-router-controller: allNBA
     get:
       description: Returns a youtube url with highlights of the specific player
@@ -303,7 +334,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/nba/rankings/{stat}:
+  /nba/rankings/{stat}:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for a certain stat
@@ -327,7 +358,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  /api/nba/rankings/player:
+  /nba/rankings/player:
     x-swagger-router-controller: allNBA
     get:
       description: Returns the rankings for most picked player
@@ -343,7 +374,34 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
-  # /api/nba/rankings/positions/{position}:
+
+  /login:
+    x-swagger-router-controller: login
+    post:
+      description: User Login
+      operationId: userLogin
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: "email and password"
+          required: true
+          schema:
+            $ref: "#/definitions/signin"
+
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/loggedIn"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+
+  # /nba/rankings/positions/{position}:
   #   x-swagger-router-controller: allNBA
   #   get:
   #     description: Returns the rankings for a certain position
@@ -371,6 +429,69 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  signin:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+
+  loggedIn:
+    required:
+      - id
+      - email
+      - first_name
+      - last_name
+      - token
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      token:
+        type: string
+  AddUser:
+    type: object
+    required:
+      - password
+      - first_name
+      - last_name
+      - email
+    properties:
+      password:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+
+  PostUsersResponse:
+    type: object
+    required:
+      - id
+      - first_name
+      - last_name
+      - email
+    properties:
+      id:
+        type: integer
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+
   ErrorResponse:
     required:
       - message
@@ -420,6 +541,24 @@ definitions:
   updatePlayerResponse:
     type: integer
     format: int64
+  createTeamBodyParameter:
+    type: object
+    properties:
+      PG:
+        type: integer
+        format: int64
+      SG:
+        type: integer
+        format: int64
+      SF:
+        type: integer
+        format: int64
+      PF:
+        type: integer
+        format: int64
+      C:
+        type: integer
+        format: int64
   postPlayerResponse:
     type: object
     properties:
@@ -449,6 +588,21 @@ definitions:
         type: number
         format: float
       tpg:
+        type: number
+        format: float
+      twopp:
+        type: number
+        format: float
+      twoapg:
+        type: number
+        format: float
+      threepp:
+        type: number
+        format: float
+      threeapg:
+        type: number
+        format: float
+      ftapg:
         type: number
         format: float
   getPlayerResponse:
@@ -488,6 +642,21 @@ definitions:
       tpg:
         type: number
         format: float
+      twopp:
+        type: number
+        format: float
+      twoapg:
+        type: number
+        format: float
+      threepp:
+        type: number
+        format: float
+      threeapg:
+        type: number
+        format: float
+      ftapg:
+        type: number
+        format: float
   rosterResponse:
     type: object
     properties:
@@ -496,8 +665,6 @@ definitions:
         format: int64
       name:
         type: string
-  postRosterResponse:
-    type: string
   teamResponse:
     type: object
     properties:
@@ -535,6 +702,21 @@ definitions:
           tpg:
             type: number
             format: float
+          twopp:
+            type: number
+            format: float
+          twoapg:
+            type: number
+            format: float
+          threepp:
+            type: number
+            format: float
+          threeapg:
+            type: number
+            format: float
+          ftapg:
+            type: number
+            format: float
       SG:
         type: object
         properties:
@@ -567,6 +749,21 @@ definitions:
             type: number
             format: float
           tpg:
+            type: number
+            format: float
+          twopp:
+            type: number
+            format: float
+          twoapg:
+            type: number
+            format: float
+          threepp:
+            type: number
+            format: float
+          threeapg:
+            type: number
+            format: float
+          ftapg:
             type: number
             format: float
       SF:
@@ -603,6 +800,21 @@ definitions:
           tpg:
             type: number
             format: float
+          twopp:
+            type: number
+            format: float
+          twoapg:
+            type: number
+            format: float
+          threepp:
+            type: number
+            format: float
+          threeapg:
+            type: number
+            format: float
+          ftapg:
+            type: number
+            format: float
       PF:
         type: object
         properties:
@@ -635,6 +847,21 @@ definitions:
             type: number
             format: float
           tpg:
+            type: number
+            format: float
+          twopp:
+            type: number
+            format: float
+          twoapg:
+            type: number
+            format: float
+          threepp:
+            type: number
+            format: float
+          threeapg:
+            type: number
+            format: float
+          ftapg:
             type: number
             format: float
       C:
@@ -671,3 +898,271 @@ definitions:
           tpg:
             type: number
             format: float
+          twopp:
+            type: number
+            format: float
+          twoapg:
+            type: number
+            format: float
+          threepp:
+            type: number
+            format: float
+          threeapg:
+            type: number
+            format: float
+          ftapg:
+            type: number
+            format: float
+  postTeamResponse:
+    type: object
+    properties:
+      team_name:
+        type: string
+      team:
+        type: object
+        properties:
+          PG:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              position:
+                type: string
+              ppg:
+                type: number
+                format: float
+              apg:
+                type: number
+                format: float
+              fgp:
+                type: number
+                format: float
+              ftp:
+                type: number
+                format: float
+              rpg:
+                type: number
+                format: float
+              bpg:
+                type: number
+                format: float
+              spg:
+                type: number
+                format: float
+              tpg:
+                type: number
+                format: float
+              twopp:
+                type: number
+                format: float
+              twoapg:
+                type: number
+                format: float
+              threepp:
+                type: number
+                format: float
+              threeapg:
+                type: number
+                format: float
+              ftapg:
+                type: number
+                format: float
+          SG:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              position:
+                type: string
+              ppg:
+                type: number
+                format: float
+              apg:
+                type: number
+                format: float
+              fgp:
+                type: number
+                format: float
+              ftp:
+                type: number
+                format: float
+              rpg:
+                type: number
+                format: float
+              bpg:
+                type: number
+                format: float
+              spg:
+                type: number
+                format: float
+              tpg:
+                type: number
+                format: float
+              twopp:
+                type: number
+                format: float
+              twoapg:
+                type: number
+                format: float
+              threepp:
+                type: number
+                format: float
+              threeapg:
+                type: number
+                format: float
+              ftapg:
+                type: number
+                format: float
+          SF:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              position:
+                type: string
+              ppg:
+                type: number
+                format: float
+              apg:
+                type: number
+                format: float
+              fgp:
+                type: number
+                format: float
+              ftp:
+                type: number
+                format: float
+              rpg:
+                type: number
+                format: float
+              bpg:
+                type: number
+                format: float
+              spg:
+                type: number
+                format: float
+              tpg:
+                type: number
+                format: float
+              twopp:
+                type: number
+                format: float
+              twoapg:
+                type: number
+                format: float
+              threepp:
+                type: number
+                format: float
+              threeapg:
+                type: number
+                format: float
+              ftapg:
+                type: number
+                format: float
+          PF:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              position:
+                type: string
+              ppg:
+                type: number
+                format: float
+              apg:
+                type: number
+                format: float
+              fgp:
+                type: number
+                format: float
+              ftp:
+                type: number
+                format: float
+              rpg:
+                type: number
+                format: float
+              bpg:
+                type: number
+                format: float
+              spg:
+                type: number
+                format: float
+              tpg:
+                type: number
+                format: float
+              twopp:
+                type: number
+                format: float
+              twoapg:
+                type: number
+                format: float
+              threepp:
+                type: number
+                format: float
+              threeapg:
+                type: number
+                format: float
+              ftapg:
+                type: number
+                format: float
+          C:
+            type: object
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              position:
+                type: string
+              ppg:
+                type: number
+                format: float
+              apg:
+                type: number
+                format: float
+              fgp:
+                type: number
+                format: float
+              ftp:
+                type: number
+                format: float
+              rpg:
+                type: number
+                format: float
+              bpg:
+                type: number
+                format: float
+              spg:
+                type: number
+                format: float
+              tpg:
+                type: number
+                format: float
+              twopp:
+                type: number
+                format: float
+              twoapg:
+                type: number
+                format: float
+              threepp:
+                type: number
+                format: float
+              threeapg:
+                type: number
+                format: float
+              ftapg:
+                type: number
+                format: float
